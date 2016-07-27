@@ -1,0 +1,92 @@
+[
+  {
+    "type": "jpg",
+    "ext": "jpg",
+    "mime": "image/jpeg",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 2, "bytes": "ffd8"  }
+    ]
+  },
+
+  {
+    "type": "png",
+    "ext": "png",
+    "mime": "image/png",
+    "rules": [
+      { "type": "equal", "start": 0,"end": 4, "bytes": "89504e47" }
+    ]
+  },
+
+  {
+    "type": "gif",
+    "ext": "gif",
+    "mime": "image/gif",
+    "rules": [
+      { "type": "equal", "start": 0,"end": 3, "bytes": "474946" }
+    ]
+  },
+
+  {
+    "type": "bmp",
+    "ext": "bmp",
+    "mime": "image/bmp",
+    "rules": [
+      { "type": "equal", "start": 0,"end": 2, "bytes": "424d" }
+    ]
+  },
+  {
+    "type": "webp",
+    "ext": "webp",
+    "mime": "image/webp",
+    "rules": [
+      { "type": "equal", "start": 8,"end": 12, "bytes": "57454250" }
+    ]
+  },
+
+  {
+    "type": "tif",
+    "ext": "tif",
+    "mime": "image/tiff",
+    "rules": [
+      { "type": "and", "rules":
+        [
+          { "type": "or", "rules":
+            [
+              { "type": "equal", "start": 0, "end": 4, "bytes": "49492a00" },
+              { "type": "equal", "start": 0, "end": 4,  "bytes": "4d4d002a" }
+            ]
+          },
+          { "type": "notEqual", "start": 8, "end": 10, "bytes": "4352" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "cr2",
+    "ext": "cr2",
+    "mime": "image/x-canon-cr2",
+    "rules": [
+      { "type": "and", "rules":
+        [
+          { "type": "or", "rules":
+            [
+              { "type": "equal", "start": 0, "end": 4, "bytes": "49492a00" },
+              { "type": "equal", "start": 0, "end": 4,  "bytes": "4d4d002a" }
+            ]
+          },
+          { "type": "equal", "start": 8, "end": 10, "bytes": "4352" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "jxr",
+    "ext": "jxr",
+    "mime": "image/vnd.ms-photo",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 3, "bytes": "4949bc" }
+    ]
+  }
+]
