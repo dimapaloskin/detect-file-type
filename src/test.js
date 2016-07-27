@@ -146,4 +146,15 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect tar', (done) => {
+    detect.fromFile('./files/fixture.tar', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'tar',
+        mime: 'application/x-tar'
+      });
+      done();
+    });
+  });
+
 });

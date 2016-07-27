@@ -142,5 +142,14 @@
       { "type": "equal", "start": 0, "end": 4, "bytes": "504b0304" },
       { "type": "equal", "start": 30, "end": 50, "bytes": "4d4554412d494e462f6d6f7a696c6c612e727361" }
     ]
+  },
+
+  {
+    "type": "tar",
+    "ext": "tar",
+    "mime": "application/x-tar",
+    "rules": [
+      { "type": "equal", "start": 257, "end": 262, "bytes": "7573746172" }
+    ]
   }
 ]

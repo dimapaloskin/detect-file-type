@@ -152,4 +152,15 @@ describe('file formats', function () {
       done();
     });
   });
+
+  it('should detect tar', function (done) {
+    _index2.default.fromFile('./files/fixture.tar', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'tar',
+        mime: 'application/x-tar'
+      });
+      done();
+    });
+  });
 });
