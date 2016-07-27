@@ -3,3 +3,7 @@
 > Detect file type by signatures. [file-type inspired](https://github.com/sindresorhus/file-type)
 
 [Документация на русском](README_RU.md)
+
+## License
+
+MIT © [Dmitry Pavlovsky](http://paloskin.me)
