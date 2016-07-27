@@ -102,4 +102,26 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect psd', (done) => {
+    detect.fromFile('./files/fixture.psd', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'psd',
+        mime: 'image/vnd.adobe.photoshop'
+      });
+      done();
+    });
+  });
+
+  it('should detect epub', (done) => {
+    detect.fromFile('./files/fixture.epub', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'epub',
+        mime: 'application/epub+zip'
+      });
+      done();
+    });
+  });
+
 });

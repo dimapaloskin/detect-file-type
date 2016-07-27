@@ -108,4 +108,26 @@ describe('file formats', function () {
       done();
     });
   });
+
+  it('should detect psd', function (done) {
+    _index2.default.fromFile('./files/fixture.psd', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'psd',
+        mime: 'image/vnd.adobe.photoshop'
+      });
+      done();
+    });
+  });
+
+  it('should detect epub', function (done) {
+    _index2.default.fromFile('./files/fixture.epub', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'epub',
+        mime: 'application/epub+zip'
+      });
+      done();
+    });
+  });
 });
