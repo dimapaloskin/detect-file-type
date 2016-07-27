@@ -25,7 +25,7 @@ export default {
 
         let bufferSize = bufferLength;
         if (!bufferSize) {
-          bufferSize = 100;
+          bufferSize = 500;
         }
 
         if (fileSize < bufferSize) {

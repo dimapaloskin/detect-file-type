@@ -113,12 +113,34 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect zip', (done) => {
+    detect.fromFile('./files/fixture.zip', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'zip',
+        mime: 'application/zip'
+      });
+      done();
+    });
+  });
+
   it('should detect epub', (done) => {
     detect.fromFile('./files/fixture.epub', (err, result) => {
       assert.equal(err, null);
       assert.deepEqual(result, {
         ext: 'epub',
         mime: 'application/epub+zip'
+      });
+      done();
+    });
+  });
+
+  it('should detect xpi', (done) => {
+    detect.fromFile('./files/fixture.xpi', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'xpi',
+        mime: 'application/x-xpinstall'
       });
       done();
     });

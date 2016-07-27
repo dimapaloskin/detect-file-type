@@ -120,12 +120,34 @@ describe('file formats', function () {
     });
   });
 
+  it('should detect zip', function (done) {
+    _index2.default.fromFile('./files/fixture.zip', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'zip',
+        mime: 'application/zip'
+      });
+      done();
+    });
+  });
+
   it('should detect epub', function (done) {
     _index2.default.fromFile('./files/fixture.epub', function (err, result) {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'epub',
         mime: 'application/epub+zip'
+      });
+      done();
+    });
+  });
+
+  it('should detect xpi', function (done) {
+    _index2.default.fromFile('./files/fixture.xpi', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'xpi',
+        mime: 'application/x-xpinstall'
       });
       done();
     });
