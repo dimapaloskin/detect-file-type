@@ -2,7 +2,7 @@
 
 > Определяет типа файла по сигнатурам
 
-## Get started
+## Usage
 
 ```js
   var detect = require('detect-file-type');
