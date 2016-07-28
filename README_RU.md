@@ -2,6 +2,9 @@
 
 > Определяет типа файла по сигнатурам
 
+### Поддерживаемые типы (будет пополнятся)
+  jpg, png, gif, bmp, webp, tif, cr2, jxr, psd, zip, epub, xpi, tar
+
 ## Usage
 
 ```js
