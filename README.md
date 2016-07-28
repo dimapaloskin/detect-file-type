@@ -1,4 +1,4 @@
-# detect-file-type
+# detect-file-type [![Build Status](https://travis-ci.org/dimapaloskin/detect-file-type.svg?branch=master)](https://travis-ci.org/dimapaloskin/detect-file-type)
 
 > Detect file type by signatures. [file-type inspired](https://github.com/sindresorhus/file-type)
 
