@@ -109,4 +109,4 @@ The rules `or` and `and` can be nested without restrictions.
 
 ## License
 
-MIT © [Dmitry Pavlovsky](http://paloskin.me)
+WTFPL © [Dmitry Pavlovsky](http://paloskin.me)
