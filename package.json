@@ -13,7 +13,7 @@
   },
   "repository": "dimapaloskin/detect-file-type",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=5.1"
   },
   "keywords": [
     "file",
