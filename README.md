@@ -3,7 +3,7 @@
 > Detect file type by signatures. [file-type inspired](https://github.com/sindresorhus/file-type)
 
 ### Supported types (will be updated)
-  jpg, png, gif, bmp, webp, tif, cr2, jxr, psd, zip, epub, xpi, tar
+  jpg, png, gif, bmp, webp, tif, cr2, jxr, psd, zip, epub, xpi, tar, rar, gz, bz2, 7z, dmg, mp4, m4v
 
 ## Installation
 

@@ -157,4 +157,81 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect rar', (done) => {
+    detect.fromFile('./files/fixture.rar', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'rar',
+        mime: 'application/x-rar-compressed'
+      });
+      done();
+    });
+  });
+
+  it('should detect gz', (done) => {
+    detect.fromFile('./files/fixture.tar.gz', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'gz',
+        mime: 'application/gzip'
+      });
+      done();
+    });
+  });
+
+  it('should detect bz2', (done) => {
+    detect.fromFile('./files/fixture.bz2', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'bz2',
+        mime: 'application/x-bzip2'
+      });
+      done();
+    });
+  });
+
+  it('should detect 7z', (done) => {
+    detect.fromFile('./files/fixture.7z', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: '7z',
+        mime: 'application/x-7z-compressed'
+      });
+      done();
+    });
+  });
+
+  it('should detect dmg', (done) => {
+    detect.fromFile('./files/fixture.dmg', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'dmg',
+        mime: 'application/x-apple-diskimage'
+      });
+      done();
+    });
+  });
+
+  it('should detect mp4', (done) => {
+    detect.fromFile('./files/fixture.mp4', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'mp4',
+        mime: 'video/mp4'
+      });
+      done();
+    });
+  });
+
+  it('should detect m4v', (done) => {
+    detect.fromFile('./files/fixture.m4v', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'm4v',
+        mime: 'video/x-m4v'
+      });
+      done();
+    });
+  });
+
 });

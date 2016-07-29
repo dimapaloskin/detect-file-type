@@ -151,5 +151,93 @@
     "rules": [
       { "type": "equal", "start": 257, "end": 262, "bytes": "7573746172" }
     ]
+  },
+  {
+    "type": "rar",
+    "ext": "rar",
+    "mime": "application/x-rar-compressed",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 6, "bytes": "526172211a07" },
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 6, "end": 7, "bytes": "00" },
+          { "type": "equal", "start": 6, "end": 7, "bytes": "01" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "gz",
+    "ext": "gz",
+    "mime": "application/gzip",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 3, "bytes": "1f8b08" }
+    ]
+  },
+  {
+    "type": "bz2",
+    "ext": "bz2",
+    "mime": "application/x-bzip2",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 3, "bytes": "425a68" }
+    ]
+  },
+  {
+    "type": "7z",
+    "ext": "7z",
+    "mime": "application/x-7z-compressed",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 6, "bytes": "377abcaf271c" }
+    ]
+  },
+  {
+    "type": "dmg",
+    "ext": "dmg",
+    "mime": "application/x-apple-diskimage",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 2, "bytes": "7801" }
+    ]
+  },
+
+  {
+    "type": "mp4",
+    "ext": "mp4",
+    "mime": "video/mp4",
+    "rules": [
+      { "type": "or", "rules":
+        [
+          { "type": "and", "rules":
+            [
+              { "type": "equal", "start": 0, "end": 3, "bytes": "000000" },
+              { "type": "or", "rules":
+                [
+                  { "type": "equal", "start": 3, "end": 4, "bytes": "18" },
+                  { "type": "equal", "start": 3, "end": 4, "bytes": "20" }
+                ]
+              },
+              { "type": "equal", "start": 4, "end": 8, "bytes": "66747970" }
+            ]
+          },
+          { "type": "equal", "start": 0, "end": 4, "bytes": "33677035" },
+          { "type": "and", "rules":
+            [
+              { "type": "equal", "start": 0, "end": 11, "bytes": "0000001c667479706d7034" },
+              { "type": "equal", "start": 16, "end": 28, "bytes": "6d7034316d70343269736f6d" }
+            ]
+          },
+          { "type": "equal", "start": 0, "end": 12, "bytes": "0000001c6674797069736f6d" },
+          { "type": "equal", "start": 0, "end": 16, "bytes": "0000001c667479706d70343200000000" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "m4v",
+    "ext": "m4v",
+    "mime": "video/x-m4v",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 11, "bytes": "0000001c667479704d3456" }
+    ]
   }
 ]

@@ -163,4 +163,81 @@ describe('file formats', function () {
       done();
     });
   });
+
+  it('should detect rar', function (done) {
+    _index2.default.fromFile('./files/fixture.rar', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'rar',
+        mime: 'application/x-rar-compressed'
+      });
+      done();
+    });
+  });
+
+  it('should detect gz', function (done) {
+    _index2.default.fromFile('./files/fixture.tar.gz', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'gz',
+        mime: 'application/gzip'
+      });
+      done();
+    });
+  });
+
+  it('should detect bz2', function (done) {
+    _index2.default.fromFile('./files/fixture.bz2', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'bz2',
+        mime: 'application/x-bzip2'
+      });
+      done();
+    });
+  });
+
+  it('should detect 7z', function (done) {
+    _index2.default.fromFile('./files/fixture.7z', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: '7z',
+        mime: 'application/x-7z-compressed'
+      });
+      done();
+    });
+  });
+
+  it('should detect dmg', function (done) {
+    _index2.default.fromFile('./files/fixture.dmg', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'dmg',
+        mime: 'application/x-apple-diskimage'
+      });
+      done();
+    });
+  });
+
+  it('should detect mp4', function (done) {
+    _index2.default.fromFile('./files/fixture.mp4', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'mp4',
+        mime: 'video/mp4'
+      });
+      done();
+    });
+  });
+
+  it('should detect m4v', function (done) {
+    _index2.default.fromFile('./files/fixture.m4v', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'm4v',
+        mime: 'video/x-m4v'
+      });
+      done();
+    });
+  });
 });
