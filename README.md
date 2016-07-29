@@ -31,7 +31,7 @@
 ### fromFile(filePath, bufferLength, callback)
 Detect file type from hard disk
 - `filePath` - path to file
-- `bufferLength` - (optional) Buffer size (in bytes) starting from the start of file. By default 500. If size of file less than 500Kb then param the same as size of the file
+- `bufferLength` - (optional) Buffer size (in bytes) starting from the start of file. By default 500. If size of file less than 500 bytes then param the same as size of the file
 - `callback`
 
 ### fromBuffer(buffer, callback)
