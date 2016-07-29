@@ -98,7 +98,6 @@ exports.default = {
       if (rule.type === 'equal') {
         var slicedHex = buffer.slice(rule.start || 0, rule.end || buffer.length).toString('hex');
         isDetected = slicedHex === rule.bytes;
-        console.log(buffer.slice(rule.start || 0, rule.end || buffer.length).toString());
         return _this3.isReturnFalse(isDetected, type);
       }
 
@@ -286,3 +285,4 @@ exports.default = {
     });
   }
 };
+module.exports = exports['default'];
