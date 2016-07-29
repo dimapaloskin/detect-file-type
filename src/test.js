@@ -410,4 +410,26 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect mov', (done) => {
+    detect.fromFile('./files/fixture.mov', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'mov',
+        mime: 'video/quicktime'
+      });
+      done();
+    });
+  });
+
+  it('should detect avi', (done) => {
+    detect.fromFile('./files/fixture.avi', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'avi',
+        mime: 'video/x-msvideo'
+      });
+      done();
+    });
+  });
+
 });

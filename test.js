@@ -416,4 +416,26 @@ describe('file formats', function () {
       done();
     });
   });
+
+  it('should detect mov', function (done) {
+    _index2.default.fromFile('./files/fixture.mov', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'mov',
+        mime: 'video/quicktime'
+      });
+      done();
+    });
+  });
+
+  it('should detect avi', function (done) {
+    _index2.default.fromFile('./files/fixture.avi', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'avi',
+        mime: 'video/x-msvideo'
+      });
+      done();
+    });
+  });
 });

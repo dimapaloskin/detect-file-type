@@ -422,5 +422,24 @@
     "rules": [
       { "type": "equal", "start": 0, "end": 5, "bytes": "7b5c727466" }
     ]
+  },
+
+  {
+    "type": "mov",
+    "ext": "mov",
+    "mime": "video/quicktime",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 8, "bytes": "0000001466747970" }
+    ]
+  },
+
+  {
+    "type": "avi",
+    "ext": "avi",
+    "mime": "video/x-msvideo",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "52494646" },
+      { "type": "equal", "start": 8, "end": 11, "bytes": "415649" }
+    ]
   }
 ]
