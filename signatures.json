@@ -239,5 +239,188 @@
     "rules": [
       { "type": "equal", "start": 0, "end": 11, "bytes": "0000001c667479704d3456" }
     ]
+  },
+
+  {
+    "type": "mid",
+    "ext": "mid",
+    "mime": "audio/midi",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "4d546864" }
+    ]
+  },
+
+  {
+    "type": "mkv",
+    "ext": "mkv",
+    "mime": "video/x-matroska",
+    "rules": [
+      { "type": "equal", "start": 31, "end": 39, "bytes": "6d6174726f736b61" }
+    ]
+  },
+
+  {
+    "type": "webm",
+    "ext": "webm",
+    "mime": "video/webm",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "1a45dfa3" },
+      { "type": "notEqual", "start": 31, "end": 39, "bytes": "6d6174726f736b61" }
+    ]
+  },
+
+  {
+    "type": "wmv",
+    "ext": "wmv",
+    "mime": "video/x-ms-wmv",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 10, "bytes": "3026b2758e66cf11a6d9" }
+    ]
+  },
+
+  {
+    "type": "mpg",
+    "ext": "mpg",
+    "mime": "video/mpeg",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 3, "bytes": "000001" },
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 3, "end": 4, "bytes": "b0"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "b1"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "b2"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "b3"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "b4"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "b5"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "b6"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "b7"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "b8"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "b9"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "ba"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "bb"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "bc"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "bd"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "be"},
+          { "type": "equal", "start": 3, "end": 4, "bytes": "bf"}
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "mp3",
+    "ext": "mp3",
+    "mime": "audio/mpeg",
+    "rules": [
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 0, "end": 3, "bytes": "494433" },
+          { "type": "equal", "start": 0, "end": 2, "bytes": "fffb" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "m4a",
+    "ext": "m4a",
+    "mime": "audio/m4a",
+    "rules": [
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 4, "end": 11, "bytes": "667479704d3441" },
+          { "type": "equal", "start": 0, "end": 4, "bytes": "4d344120" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "opus",
+    "ext": "opus",
+    "mime": "audio/opus",
+    "rules": [
+      { "type": "equal", "start": 28, "end": 36, "bytes": "4f70757348656164" }
+    ]
+  },
+
+  {
+    "type": "ogg",
+    "ext": "ogg",
+    "mime": "audio/ogg",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "4f676753" },
+      { "type": "notEqual", "start": 28, "end": 36, "bytes": "4f70757348656164" }
+    ]
+  },
+
+  {
+    "type": "flac",
+    "ext": "flac",
+    "mime": "audio/x-flac",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "664c6143" }
+    ]
+  },
+
+  {
+    "type": "wav",
+    "ext": "wav",
+    "mime": "audio/x-wav",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "52494646" },
+      { "type": "equal", "start": 8, "end": 12, "bytes": "57415645" }
+    ]
+  },
+
+  {
+    "type": "amr",
+    "ext": "amr",
+    "mime": "audio/amr",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 6, "bytes": "2321414d520a" }
+    ]
+  },
+
+  {
+    "type": "pdf",
+    "ext": "pdf",
+    "mime": "application/pdf",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "25504446" }
+    ]
+  },
+
+  {
+    "type": "exe",
+    "ext": "exe",
+    "mime": "application/x-msdownload",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 2, "bytes": "4d5a" }
+    ]
+  },
+
+  {
+    "type": "swf",
+    "ext": "swf",
+    "mime": "application/x-shockwave-flash",
+    "rules": [
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 0, "end": 1, "bytes": "43" },
+          { "type": "equal", "start": 0, "end": 1, "bytes": "46" }
+        ]
+      },
+      { "type": "equal", "start": 1, "end": 3, "bytes": "5753" }
+    ]
+  },
+
+  {
+    "type": "rtf",
+    "ext": "rtf",
+    "mime": "application/rtf",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 5, "bytes": "7b5c727466" }
+    ]
   }
 ]

@@ -240,4 +240,180 @@ describe('file formats', function () {
       done();
     });
   });
+
+  it('should detect midi', function (done) {
+    _index2.default.fromFile('./files/fixture.mid', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'mid',
+        mime: 'audio/midi'
+      });
+      done();
+    });
+  });
+
+  it('should detect mkv', function (done) {
+    _index2.default.fromFile('./files/fixture.mkv', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'mkv',
+        mime: 'video/x-matroska'
+      });
+      done();
+    });
+  });
+
+  it('should detect webm', function (done) {
+    _index2.default.fromFile('./files/fixture.webm', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'webm',
+        mime: 'video/webm'
+      });
+      done();
+    });
+  });
+
+  it('should detect wmv', function (done) {
+    _index2.default.fromFile('./files/fixture.wmv', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'wmv',
+        mime: 'video/x-ms-wmv'
+      });
+      done();
+    });
+  });
+
+  it('should detect mpg', function (done) {
+    _index2.default.fromFile('./files/fixture.mpg', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'mpg',
+        mime: 'video/mpeg'
+      });
+      done();
+    });
+  });
+
+  it('should detect mp3', function (done) {
+    _index2.default.fromFile('./files/fixture.mp3', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'mp3',
+        mime: 'audio/mpeg'
+      });
+      done();
+    });
+  });
+
+  it('should detect m4a', function (done) {
+    _index2.default.fromFile('./files/fixture.m4a', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'm4a',
+        mime: 'audio/m4a'
+      });
+      done();
+    });
+  });
+
+  it('should detect opus', function (done) {
+    _index2.default.fromFile('./files/fixture.opus', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'opus',
+        mime: 'audio/opus'
+      });
+      done();
+    });
+  });
+
+  it('should detect ogg', function (done) {
+    _index2.default.fromFile('./files/fixture.ogg', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'ogg',
+        mime: 'audio/ogg'
+      });
+      done();
+    });
+  });
+
+  it('should detect flac', function (done) {
+    _index2.default.fromFile('./files/fixture.flac', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'flac',
+        mime: 'audio/x-flac'
+      });
+      done();
+    });
+  });
+
+  it('should detect wav', function (done) {
+    _index2.default.fromFile('./files/fixture.wav', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'wav',
+        mime: 'audio/x-wav'
+      });
+      done();
+    });
+  });
+
+  it('should detect amr', function (done) {
+    _index2.default.fromFile('./files/fixture.amr', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'amr',
+        mime: 'audio/amr'
+      });
+      done();
+    });
+  });
+
+  it('should detect pdf', function (done) {
+    _index2.default.fromFile('./files/fixture.pdf', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'pdf',
+        mime: 'application/pdf'
+      });
+      done();
+    });
+  });
+
+  it('should detect exe', function (done) {
+    _index2.default.fromFile('./files/fixture.exe', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'exe',
+        mime: 'application/x-msdownload'
+      });
+      done();
+    });
+  });
+
+  it('should detect swf', function (done) {
+    _index2.default.fromFile('./files/fixture.swf', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'swf',
+        mime: 'application/x-shockwave-flash'
+      });
+      done();
+    });
+  });
+
+  it('should detect rtf', function (done) {
+    _index2.default.fromFile('./files/fixture.rtf', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'rtf',
+        mime: 'application/rtf'
+      });
+      done();
+    });
+  });
 });
