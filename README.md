@@ -8,7 +8,7 @@
 ## Installation
 
 ```
-  npm i detect-file-type
+  npm i --save detect-file-type
 ```
 
 ## Usage
