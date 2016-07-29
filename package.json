@@ -19,7 +19,11 @@
     "file",
     "type",
     "mime",
-    "detect"
+    "detect",
+    "check",
+    "uint8array",
+    "check",
+    "buffer"
   ],
   "license": "WTFPL",
   "devDependencies": {
