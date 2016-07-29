@@ -647,4 +647,26 @@ describe('file formats', function () {
       done();
     });
   });
+
+  it('should detect svg', function (done) {
+    _index2.default.fromFile('./files/fixture.svg', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'svg',
+        mime: 'image/svg+xml'
+      });
+      done();
+    });
+  });
+
+  it('should detect doc', function (done) {
+    _index2.default.fromFile('./files/fixture.doc', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'doc',
+        mime: 'application/msword'
+      });
+      done();
+    });
+  });
 });

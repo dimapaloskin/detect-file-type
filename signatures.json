@@ -642,5 +642,14 @@
     "rules": [
       { "type": "equal", "start": 0, "end": 8, "bytes": "d0cf11e0a1b11ae1" }
     ]
+  },
+
+  {
+    "type": "svg",
+    "ext": "svg",
+    "mime": "image/svg+xml",
+    "rules": [
+      { "type": "contains", "bytes": "3c737667" }
+    ]
   }
 ]

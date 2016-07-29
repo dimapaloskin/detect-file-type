@@ -641,4 +641,15 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect svg', (done) => {
+    detect.fromFile('./files/fixture.svg', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'svg',
+        mime: 'image/svg+xml'
+      });
+      done();
+    });
+  });
+
 });
