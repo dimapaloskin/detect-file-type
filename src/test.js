@@ -432,4 +432,213 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect woff', (done) => {
+    detect.fromFile('./files/fixture.woff', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'woff',
+        mime: 'application/font-woff'
+      });
+      done();
+    });
+  });
+
+  it('should detect woff2', (done) => {
+    detect.fromFile('./files/fixture.woff2', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'woff2',
+        mime: 'application/font-woff'
+      });
+      done();
+    });
+  });
+
+  it('should detect eot', (done) => {
+    detect.fromFile('./files/fixture.eot', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'eot',
+        mime: 'application/octet-stream'
+      });
+      done();
+    });
+  });
+
+  it('should detect ttf', (done) => {
+    detect.fromFile('./files/fixture.ttf', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'ttf',
+        mime: 'application/font-sfnt'
+      });
+      done();
+    });
+  });
+
+  it('should detect otf', (done) => {
+    detect.fromFile('./files/fixture.otf', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'otf',
+        mime: 'application/font-sfnt'
+      });
+      done();
+    });
+  });
+
+  it('should detect ico', (done) => {
+    detect.fromFile('./files/fixture.ico', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'ico',
+        mime: 'application/x-icon'
+      });
+      done();
+    });
+  });
+
+  it('should detect flv', (done) => {
+    detect.fromFile('./files/fixture.flv', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'flv',
+        mime: 'application/x-flv'
+      });
+      done();
+    });
+  });
+
+  it('should detect ps', (done) => {
+    detect.fromFile('./files/fixture.ps', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'ps',
+        mime: 'application/postscript'
+      });
+      done();
+    });
+  });
+
+  it('should detect xz', (done) => {
+    detect.fromFile('./files/fixture.tar.xz', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'xz',
+        mime: 'application/x-xz'
+      });
+      done();
+    });
+  });
+
+  it('should detect sqlite', (done) => {
+    detect.fromFile('./files/fixture.sqlite', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'sqlite',
+        mime: 'application/x-sqlite3'
+      });
+      done();
+    });
+  });
+
+  it('should detect nes', (done) => {
+    detect.fromFile('./files/fixture.nes', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'nes',
+        mime: 'application/x-nintendo-nes-rom'
+      });
+      done();
+    });
+  });
+
+  it('should detect crx', (done) => {
+    detect.fromFile('./files/fixture.crx', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'crx',
+        mime: 'application/x-google-chrome-extension'
+      });
+      done();
+    });
+  });
+
+  it('should detect cab', (done) => {
+    detect.fromFile('./files/fixture.cab', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'cab',
+        mime: 'application/vnd.ms-cab-compressed'
+      });
+      done();
+    });
+  });
+
+  it('should detect deb', (done) => {
+    detect.fromFile('./files/fixture.deb', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'deb',
+        mime: 'application/x-deb'
+      });
+      done();
+    });
+  });
+
+  it('should detect ar', (done) => {
+    detect.fromFile('./files/fixture.ar', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'ar',
+        mime: 'application/x-unix-archive'
+      });
+      done();
+    });
+  });
+
+  it('should detect rpm', (done) => {
+    detect.fromFile('./files/fixture.rpm', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'rpm',
+        mime: 'application/x-rpm'
+      });
+      done();
+    });
+  });
+
+  it('should detect tar.Z', (done) => {
+    detect.fromFile('./files/fixture.tar.Z', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'Z',
+        mime: 'application/x-compress'
+      });
+      done();
+    });
+  });
+
+  it('should detect lz', (done) => {
+    detect.fromFile('./files/fixture.tar.lz', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'lz',
+        mime: 'application/x-lzip'
+      });
+      done();
+    });
+  });
+
+  it('should detect msi', (done) => {
+    detect.fromFile('./files/fixture.msi', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'msi',
+        mime: 'application/x-msi'
+      });
+      done();
+    });
+  });
+
 });

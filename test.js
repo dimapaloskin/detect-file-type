@@ -438,4 +438,213 @@ describe('file formats', function () {
       done();
     });
   });
+
+  it('should detect woff', function (done) {
+    _index2.default.fromFile('./files/fixture.woff', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'woff',
+        mime: 'application/font-woff'
+      });
+      done();
+    });
+  });
+
+  it('should detect woff2', function (done) {
+    _index2.default.fromFile('./files/fixture.woff2', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'woff2',
+        mime: 'application/font-woff'
+      });
+      done();
+    });
+  });
+
+  it('should detect eot', function (done) {
+    _index2.default.fromFile('./files/fixture.eot', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'eot',
+        mime: 'application/octet-stream'
+      });
+      done();
+    });
+  });
+
+  it('should detect ttf', function (done) {
+    _index2.default.fromFile('./files/fixture.ttf', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'ttf',
+        mime: 'application/font-sfnt'
+      });
+      done();
+    });
+  });
+
+  it('should detect otf', function (done) {
+    _index2.default.fromFile('./files/fixture.otf', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'otf',
+        mime: 'application/font-sfnt'
+      });
+      done();
+    });
+  });
+
+  it('should detect ico', function (done) {
+    _index2.default.fromFile('./files/fixture.ico', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'ico',
+        mime: 'application/x-icon'
+      });
+      done();
+    });
+  });
+
+  it('should detect flv', function (done) {
+    _index2.default.fromFile('./files/fixture.flv', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'flv',
+        mime: 'application/x-flv'
+      });
+      done();
+    });
+  });
+
+  it('should detect ps', function (done) {
+    _index2.default.fromFile('./files/fixture.ps', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'ps',
+        mime: 'application/postscript'
+      });
+      done();
+    });
+  });
+
+  it('should detect xz', function (done) {
+    _index2.default.fromFile('./files/fixture.tar.xz', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'xz',
+        mime: 'application/x-xz'
+      });
+      done();
+    });
+  });
+
+  it('should detect sqlite', function (done) {
+    _index2.default.fromFile('./files/fixture.sqlite', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'sqlite',
+        mime: 'application/x-sqlite3'
+      });
+      done();
+    });
+  });
+
+  it('should detect nes', function (done) {
+    _index2.default.fromFile('./files/fixture.nes', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'nes',
+        mime: 'application/x-nintendo-nes-rom'
+      });
+      done();
+    });
+  });
+
+  it('should detect crx', function (done) {
+    _index2.default.fromFile('./files/fixture.crx', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'crx',
+        mime: 'application/x-google-chrome-extension'
+      });
+      done();
+    });
+  });
+
+  it('should detect cab', function (done) {
+    _index2.default.fromFile('./files/fixture.cab', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'cab',
+        mime: 'application/vnd.ms-cab-compressed'
+      });
+      done();
+    });
+  });
+
+  it('should detect deb', function (done) {
+    _index2.default.fromFile('./files/fixture.deb', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'deb',
+        mime: 'application/x-deb'
+      });
+      done();
+    });
+  });
+
+  it('should detect ar', function (done) {
+    _index2.default.fromFile('./files/fixture.ar', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'ar',
+        mime: 'application/x-unix-archive'
+      });
+      done();
+    });
+  });
+
+  it('should detect rpm', function (done) {
+    _index2.default.fromFile('./files/fixture.rpm', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'rpm',
+        mime: 'application/x-rpm'
+      });
+      done();
+    });
+  });
+
+  it('should detect tar.Z', function (done) {
+    _index2.default.fromFile('./files/fixture.tar.Z', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'Z',
+        mime: 'application/x-compress'
+      });
+      done();
+    });
+  });
+
+  it('should detect lz', function (done) {
+    _index2.default.fromFile('./files/fixture.tar.lz', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'lz',
+        mime: 'application/x-lzip'
+      });
+      done();
+    });
+  });
+
+  it('should detect msi', function (done) {
+    _index2.default.fromFile('./files/fixture.msi', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'msi',
+        mime: 'application/x-msi'
+      });
+      done();
+    });
+  });
 });

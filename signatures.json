@@ -441,5 +441,206 @@
       { "type": "equal", "start": 0, "end": 4, "bytes": "52494646" },
       { "type": "equal", "start": 8, "end": 11, "bytes": "415649" }
     ]
+  },
+
+  {
+    "type": "woff",
+    "ext": "woff",
+    "mime": "application/font-woff",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "774f4646" },
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 4, "end": 8, "bytes": "00010000" },
+          { "type": "equal", "start": 4, "end": 8, "bytes": "4f54544f" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "woff2",
+    "ext": "woff2",
+    "mime": "application/font-woff",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "774f4632" },
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 4, "end": 8, "bytes": "00010000" },
+          { "type": "equal", "start": 4, "end": 8, "bytes": "4f54544f" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "eot",
+    "ext": "eot",
+    "mime": "application/octet-stream",
+    "rules": [
+      { "type": "equal", "start": 34, "end": 36, "bytes": "4c50" },
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 8, "end": 11, "bytes": "000001" },
+          { "type": "equal", "start": 8, "end": 11, "bytes": "010002" },
+          { "type": "equal", "start": 8, "end": 11, "bytes": "020002" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "ttf",
+    "ext": "ttf",
+    "mime": "application/font-sfnt",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 5, "bytes": "0001000000" }
+    ]
+  },
+
+  {
+    "type": "otf",
+    "ext": "otf",
+    "mime": "application/font-sfnt",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 5, "bytes": "4f54544f00" }
+    ]
+  },
+
+  {
+    "type": "ico",
+    "ext": "ico",
+    "mime": "application/x-icon",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "00000100" }
+    ]
+  },
+
+  {
+    "type": "flv",
+    "ext": "flv",
+    "mime": "application/x-flv",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "464c5601" }
+    ]
+  },
+
+  {
+    "type": "ps",
+    "ext": "ps",
+    "mime": "application/postscript",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 2, "bytes": "2521" }
+    ]
+  },
+
+  {
+    "type": "xz",
+    "ext": "xz",
+    "mime": "application/x-xz",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 6, "bytes": "fd377a585a00" }
+    ]
+  },
+
+  {
+    "type": "sqlite",
+    "ext": "sqlite",
+    "mime": "application/x-sqlite3",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "53514c69" }
+    ]
+  },
+
+  {
+    "type": "nes",
+    "ext": "nes",
+    "mime": "application/x-nintendo-nes-rom",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "4e45531a" }
+    ]
+  },
+
+  {
+    "type": "crx",
+    "ext": "crx",
+    "mime": "application/x-google-chrome-extension",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "43723234" }
+    ]
+  },
+
+  {
+    "type": "cab",
+    "ext": "cab",
+    "mime": "application/vnd.ms-cab-compressed",
+    "rules": [
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 0, "end": 4, "bytes": "4d534346" },
+          { "type": "equal", "start": 0, "end": 4, "bytes": "49536328" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "ar",
+    "ext": "ar",
+    "mime": "application/x-unix-archive",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 7, "bytes": "213c617263683e" },
+      { "type": "notEqual", "start": 0, "end": 21, "bytes": "213c617263683e0a64656269616e2d62696e617279" }
+    ]
+  },
+
+  {
+    "type": "deb",
+    "ext": "deb",
+    "mime": "application/x-deb",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 21, "bytes": "213c617263683e0a64656269616e2d62696e617279" }
+    ]
+  },
+
+  {
+    "type": "rpm",
+    "ext": "rpm",
+    "mime": "application/x-rpm",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "edabeedb" }
+    ]
+  },
+
+  {
+    "type": "Z",
+    "ext": "Z",
+    "mime": "application/x-compress",
+    "rules": [
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 0, "end": 2, "bytes": "1fa0" },
+          { "type": "equal", "start": 0, "end": 2, "bytes": "1f9d" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "lz",
+    "ext": "lz",
+    "mime": "application/x-lzip",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "4c5a4950" }
+    ]
+  },
+
+  {
+    "type": "msi",
+    "ext": "msi",
+    "mime": "application/x-msi",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 8, "bytes": "d0cf11e0a1b11ae1" }
+    ]
   }
 ]
