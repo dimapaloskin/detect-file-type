@@ -651,5 +651,19 @@
     "rules": [
       { "type": "contains", "bytes": "3c737667" }
     ]
+  },
+
+  {
+    "type": "html",
+    "ext": "html",
+    "mime": "text/html",
+    "rules": [
+      { "type": "or", "rules":
+      [
+        { "type": "contains", "bytes": "3c68746d6c" },
+        { "type": "contains", "bytes": "3c00680074006d006c00" }
+      ]
+      }
+    ]
   }
 ]
