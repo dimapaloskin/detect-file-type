@@ -51,7 +51,7 @@ This method needed for more complicated cases like html or xml for example. Trul
 
 ```js
 const detect = require('detect-file-type');
-const isHtml = require('is-html);
+const isHtml = require('is-html');
 
 detect.addCustomFunction((buffer) => {
 
