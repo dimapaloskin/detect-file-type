@@ -1,6 +1,6 @@
 {
   "name": "detect-file-type",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Detect file type by signature",
   "main": "index.js",
   "scripts": {
