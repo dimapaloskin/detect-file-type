@@ -68,8 +68,7 @@ detect.fromFile('./some.html', (err, result) => {
     return console.log(err);
   }
   
-  console.log(result); // 
-    console.log(result); // { ext: 'html', mime: 'text/html' }
+  console.log(result); // { ext: 'html', mime: 'text/html' }
 });
 ```
 
