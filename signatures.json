@@ -100,6 +100,15 @@
   },
 
   {
+    "type": "flif",
+    "ext": "flif",
+    "mime": "image/flif",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "464c4946" }
+    ]
+  },
+
+  {
     "type": "zip",
     "ext": "zip",
     "mime": "application/zip",
