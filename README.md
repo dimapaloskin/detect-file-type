@@ -50,7 +50,11 @@ Add custom function which receive buffer and trying to detect file type.
 This method needed for more complicated cases like html or xml for example. Truly uncomfortable to detect html via signatures because html format has a lot of "magic numbers" in the different places. So you can install [is-html](https://www.npmjs.com/package/is-html) package for example and use its functionality.
 
 ```js
+const detect = require('detect-file-type');
+const isHtml = require('is-html);
+
 detect.addCustomFunction((buffer) => {
+
   const str = buffer.toString();
   if (isHtml(str)) {
     return {
