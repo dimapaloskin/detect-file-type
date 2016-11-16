@@ -16,7 +16,7 @@ describe('custom function', function () {
   it('should detect html without fixture', function (done) {
     _index2.default.addCustomFunction(function (buffer) {
       var str = buffer.toString();
-      if (_isHtml2.default) {
+      if ((0, _isHtml2.default)(str)) {
         return {
           ext: 'html',
           mime: 'text/html'

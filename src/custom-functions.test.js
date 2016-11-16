@@ -6,7 +6,7 @@ describe('custom function', () => {
   it(`should detect html without fixture`, (done) => {
     detect.addCustomFunction((buffer) => {
       const str = buffer.toString();
-      if (isHtml) {
+      if (isHtml(str)) {
         return {
           ext: 'html',
           mime: 'text/html'
