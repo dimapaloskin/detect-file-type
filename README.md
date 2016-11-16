@@ -43,6 +43,38 @@ Detect file type from buffer
 Add new signature for file type detecting
 - `signature` - a signature. See section about it below
 
+### addCustomFunction(fn)
+Add custom function which receive buffer and trying to detect file type.
+- `fn` - function which receive buffer
+
+This method needed for more complicated cases like html or xml for example. Truly uncomfortable to detect html via signatures because html format has a lot of "magic numbers" in the different places. So you can install [is-html](https://www.npmjs.com/package/is-html) package for example and use its functionality.
+
+```js
+detect.addCustomFunction((buffer) => {
+  const str = buffer.toString();
+  if (isHtml(str)) {
+    return {
+      ext: 'html',
+      mime: 'text/html'
+    }
+  }
+
+  return false;
+});
+
+detect.fromFile('./some.html', (err, result) => {
+  
+  if (err) {
+    return console.log(err);
+  }
+  
+  console.log(result); // 
+    console.log(result); // { ext: 'html', mime: 'text/html' }
+});
+```
+
+**Note**: custom function should be pure (without any async operations)
+
 ## Signature and creating your own signatures
 Detecting of file type work via signatures.
 The simplest signature in JSON format looks like:
