@@ -652,4 +652,15 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect flif', (done) => {
+    detect.fromFile('./files/fixture.flif', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'flif',
+        mime: 'image/flif'
+      });
+      done();
+    });
+  });
+
 });

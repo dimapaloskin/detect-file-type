@@ -658,4 +658,15 @@ describe('file formats', function () {
       done();
     });
   });
+
+  it('should detect flif', function (done) {
+    _index2.default.fromFile('./files/fixture.flif', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'flif',
+        mime: 'image/flif'
+      });
+      done();
+    });
+  });
 });
