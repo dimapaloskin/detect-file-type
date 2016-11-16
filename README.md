@@ -109,7 +109,7 @@ More details about param `rules`:
 - `equal` - here is required field `bytes`. We get a dump of buffer from `start` (equals 0 by default) to `end` (equals buffer.length by default). After that we compare the dump with value in param `bytes`. If values are equal then this rule is correct.
 - `notEqual` - here is required field `bytes`. We get a dump of buffer from `start` (equals 0 by default) to `end` (equals buffer.length by default). After that we compare the dump with value in param `bytes`. If values aren't equal then this rule is correct.
 - `contains` - here is required field `bytes`. We get a dump of buffer from `start` (equals 0 by default) to `end` (equals buffer.length by default). After that we try to find the sequence from `bytes` in this dump. If the dump contains `bytes` then rules is correct.
-- `notContains` - here is required field `bytes`. We get a dump of buffer from `start` (equals 0 by default) to `end` (equals buffer.length by default).  After that we try to find the sequence from `bytes` in this dump. If the dump contains `bytes` then rules is correct.
+- `notContains` - here is required field `bytes`. We get a dump of buffer from `start` (equals 0 by default) to `end` (equals buffer.length by default).  After that we try to find the sequence from `bytes` in this dump. If the dump contains `bytes` then rules is incorrect.
 
 #### More details about the rule types `or` and `and`
 
