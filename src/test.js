@@ -663,4 +663,15 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect html started with html tag', (done) => {
+    detect.fromFile('./files/fixture-simple-html.html', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'html',
+        mime: 'text/html'
+      });
+      done();
+    });
+  });
+
 });

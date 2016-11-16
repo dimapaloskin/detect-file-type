@@ -669,4 +669,15 @@ describe('file formats', function () {
       done();
     });
   });
+
+  it('should detect html started with html tag', function (done) {
+    _index2.default.fromFile('./files/fixture-simple-html.html', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'html',
+        mime: 'text/html'
+      });
+      done();
+    });
+  });
 });
