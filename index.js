@@ -18,6 +18,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+var customFunctions = [];
+
 exports.default = {
   fromFile: function fromFile(filePath, bufferLength, callback) {
     var _this = this;
@@ -81,6 +83,17 @@ exports.default = {
       }
       return true;
     });
+
+    if (result === null) {
+      customFunctions.every(function (fn) {
+        var fnResult = fn(buffer);
+        if (fnResult) {
+          result = fnResult;
+          return false;
+        };
+        return true;
+      });
+    }
 
     callback(null, result);
   },
@@ -274,6 +287,9 @@ exports.default = {
   },
   addSignature: function addSignature(signature) {
     _signatures2.default.push(signature);
+  },
+  addCustomFunction: function addCustomFunction(fn) {
+    customFunctions.push(fn);
   },
   getFileSize: function getFileSize(filePath, callback) {
     _fs2.default.stat(filePath, function (err, stat) {

@@ -1,6 +1,8 @@
 import fs from 'fs';
 import signatures from './signatures.json';
 
+const customFunctions = [];
+
 export default {
 
   fromFile(filePath, bufferLength, callback) {
@@ -65,6 +67,17 @@ export default {
       }
       return true;
     });
+
+    if (result === null) {
+      customFunctions.every((fn) => {
+        const fnResult = fn(buffer);
+        if (fnResult) {
+          result = fnResult;
+          return false;
+        };
+        return true;
+      });
+    }
 
     callback(null, result);
   },
@@ -251,6 +264,10 @@ export default {
 
   addSignature(signature) {
     signatures.push(signature);
+  },
+
+  addCustomFunction(fn) {
+    customFunctions.push(fn);
   },
 
   getFileSize(filePath, callback) {

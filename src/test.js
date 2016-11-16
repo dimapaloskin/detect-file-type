@@ -1,5 +1,6 @@
 import {assert} from 'chai';
 import detect from './index';
+import './custom-functions.test';
 
 describe('file formats', () => {
 
