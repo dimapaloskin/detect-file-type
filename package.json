@@ -4,8 +4,12 @@
   "description": "Detect file type by signature",
   "main": "index.js",
   "scripts": {
+    "build": "./node_modules/babel-cli/bin/babel.js src/ -d ./",
     "test": "./node_modules/babel-cli/bin/babel.js src/ -d ./ && ./node_modules/mocha/bin/mocha test.js"
   },
+  "files": [
+    "index.js"
+  ],
   "author": {
     "name": "Dmitry Pavlovsky",
     "email": "dima@paloskin.me",

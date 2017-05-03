@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -121,40 +119,28 @@ exports.default = {
       }
 
       if (rule.type === 'contains') {
-        var _ret = function () {
-          var slicedHex = buffer.slice(rule.start || 0, rule.end || buffer.length).toString('hex');
-          if (typeof rule.bytes === 'string') {
-            rule.bytes = [rule.bytes];
-          }
-          rule.bytes.every(function (bytes) {
-            isDetected = slicedHex.indexOf(bytes) !== -1;
-            return isDetected;
-          });
+        var _slicedHex2 = buffer.slice(rule.start || 0, rule.end || buffer.length).toString('hex');
+        if (typeof rule.bytes === 'string') {
+          rule.bytes = [rule.bytes];
+        }
+        rule.bytes.every(function (bytes) {
+          isDetected = _slicedHex2.indexOf(bytes) !== -1;
+          return isDetected;
+        });
 
-          return {
-            v: _this3.isReturnFalse(isDetected, type)
-          };
-        }();
-
-        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+        return _this3.isReturnFalse(isDetected, type);
       }
 
       if (rule.type === 'notContains') {
-        var _ret2 = function () {
-          var slicedHex = buffer.slice(rule.start || 0, rule.end || buffer.length).toString('hex');
-          if (typeof rule.bytes === 'string') {
-            rule.bytes = [rule.bytes];
-          }
-          rule.bytes.every(function (bytes) {
-            isDetected = slicedHex.indexOf(bytes) === -1;
-            return isDetected;
-          });
-          return {
-            v: _this3.isReturnFalse(isDetected, type)
-          };
-        }();
-
-        if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+        var _slicedHex3 = buffer.slice(rule.start || 0, rule.end || buffer.length).toString('hex');
+        if (typeof rule.bytes === 'string') {
+          rule.bytes = [rule.bytes];
+        }
+        rule.bytes.every(function (bytes) {
+          isDetected = _slicedHex3.indexOf(bytes) === -1;
+          return isDetected;
+        });
+        return _this3.isReturnFalse(isDetected, type);
       }
 
       if (rule.type === 'or') {
