@@ -8,7 +8,8 @@
     "test": "./node_modules/babel-cli/bin/babel.js src/ -d ./ && ./node_modules/mocha/bin/mocha test.js"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "signatures.json"
   ],
   "author": {
     "name": "Dmitry Pavlovsky",
