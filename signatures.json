@@ -279,6 +279,15 @@
   },
 
   {
+    "type": "wasm",
+    "ext": "wasm",
+    "mime": "application/wasm",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "0061736d" }
+    ]
+  },
+
+  {
     "type": "wmv",
     "ext": "wmv",
     "mime": "video/x-ms-wmv",
