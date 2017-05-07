@@ -13,7 +13,7 @@
     "ext": "png",
     "mime": "image/png",
     "rules": [
-      { "type": "equal", "start": 0,"end": 4, "bytes": "89504e47" }
+      { "type": "equal", "start": 0,"end": 8, "bytes": "89504e470d0a1a0a" }
     ]
   },
 
