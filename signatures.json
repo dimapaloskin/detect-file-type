@@ -392,6 +392,15 @@
   },
 
   {
+    "type": "mxf",
+    "ext": "mxf",
+    "mime": "application/mxf",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 5, "bytes": "060e2b3402" }
+    ]
+  },
+
+  {
     "type": "pdf",
     "ext": "pdf",
     "mime": "application/pdf",
