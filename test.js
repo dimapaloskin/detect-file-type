@@ -221,8 +221,30 @@ describe('file formats', function () {
     });
   });
 
-  it('should detect mp4', function (done) {
+  it('should detect mp4 (M4V+M4A)', function (done) {
     _index2.default.fromFile('./files/fixture.mp4', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'mp4',
+        mime: 'video/mp4'
+      });
+      done();
+    });
+  });
+
+  it('should detect mp4 (mpeg42)', function (done) {
+    _index2.default.fromFile('./files/fixture-mpeg42.mp4', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'mp4',
+        mime: 'video/mp4'
+      });
+      done();
+    });
+  });
+
+  it('should detect mp4 (isom)', function (done) {
+    _index2.default.fromFile('./files/fixture-isom.mp4', function (err, result) {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'mp4',
@@ -237,7 +259,8 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'm4v',
-        mime: 'video/x-m4v'
+        mime: 'video/x-m4v',
+        iana: 'video/mp4'
       });
       done();
     });
@@ -314,7 +337,8 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'm4a',
-        mime: 'audio/m4a'
+        mime: 'audio/x-m4a',
+        iana: 'audio/mp4'
       });
       done();
     });
