@@ -3,6 +3,8 @@ import signatures from './signatures.json';
 
 const customFunctions = [];
 
+const noopCallback = function () {};
+
 export default {
 
   fromFile(filePath, bufferLength, callback) {
@@ -18,7 +20,7 @@ export default {
         return callback(err);
       }
 
-      const file = fs.open(filePath, 'r', (err, fd) => {
+      fs.open(filePath, 'r', (err, fd) => {
 
         if (err) {
           return callback(err);
@@ -37,6 +39,8 @@ export default {
         const buffer = new Buffer(bufferSize);
 
         fs.read(fd, buffer, 0, bufferSize, 0, (err, data) => {
+
+          fs.close(fd, noopCallback);
 
           if (err) {
             return callback(err);
