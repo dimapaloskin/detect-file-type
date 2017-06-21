@@ -18,6 +18,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var customFunctions = [];
 
+var noopCallback = function noopCallback() {};
+
 exports.default = {
   fromFile: function fromFile(filePath, bufferLength, callback) {
     var _this = this;
@@ -33,7 +35,7 @@ exports.default = {
         return callback(err);
       }
 
-      var file = _fs2.default.open(filePath, 'r', function (err, fd) {
+      _fs2.default.open(filePath, 'r', function (err, fd) {
 
         if (err) {
           return callback(err);
@@ -51,6 +53,8 @@ exports.default = {
         var buffer = new Buffer(bufferSize);
 
         _fs2.default.read(fd, buffer, 0, bufferSize, 0, function (err, data) {
+
+          _fs2.default.close(fd, noopCallback);
 
           if (err) {
             return callback(err);
