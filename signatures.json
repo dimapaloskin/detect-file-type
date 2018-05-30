@@ -405,7 +405,14 @@
     "ext": "exe",
     "mime": "application/x-msdownload",
     "rules": [
-      { "type": "equal", "start": 0, "end": 2, "bytes": "4d5a" }
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 0, "end": 2, "bytes": "4d5a" },
+          { "type": "equal", "start": 0, "end": 2, "bytes": "4d7a" },
+          { "type": "equal", "start": 0, "end": 2, "bytes": "6d7a" },
+          { "type": "equal", "start": 0, "end": 2, "bytes": "6d5a" }
+        ]
+      }
     ]
   },
 
