@@ -383,7 +383,8 @@ describe('file formats', () => {
       assert.equal(err, null);
       assert.deepEqual(result, {
         ext: 'exe',
-        mime: 'application/x-msdownload'
+        mime: 'application/x-msdownload',
+        iana: "application/vnd.microsoft.portable-executable"
       });
       done();
     });
@@ -394,7 +395,8 @@ describe('file formats', () => {
       assert.equal(err, null);
       assert.deepEqual(result, {
         ext: 'swf',
-        mime: 'application/x-shockwave-flash'
+        mime: 'application/x-shockwave-flash',
+        iana: "application/vnd.adobe.flash.movie"
       });
       done();
     });
@@ -493,7 +495,8 @@ describe('file formats', () => {
       assert.equal(err, null);
       assert.deepEqual(result, {
         ext: 'ico',
-        mime: 'application/x-icon'
+        mime: 'application/x-icon',
+        iana: "image/vnd.microsoft.icon"
       });
       done();
     });
@@ -537,7 +540,8 @@ describe('file formats', () => {
       assert.equal(err, null);
       assert.deepEqual(result, {
         ext: 'sqlite',
-        mime: 'application/x-sqlite3'
+        mime: 'application/x-sqlite3',
+        iana: 'application/vnd.sqlite3'
       });
       done();
     });

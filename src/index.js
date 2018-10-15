@@ -67,6 +67,10 @@ export default {
           ext: signature.ext,
           mime: signature.mime
         };
+
+        if (signature.iana)
+          result.iana = signature.iana;
+
         return false;
       }
       return true;

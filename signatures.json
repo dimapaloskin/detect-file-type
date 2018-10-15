@@ -404,6 +404,7 @@
     "type": "exe",
     "ext": "exe",
     "mime": "application/x-msdownload",
+    "iana": "application/vnd.microsoft.portable-executable",
     "rules": [
       { "type": "or", "rules":
         [
@@ -420,6 +421,7 @@
     "type": "swf",
     "ext": "swf",
     "mime": "application/x-shockwave-flash",
+    "iana": "application/vnd.adobe.flash.movie",
     "rules": [
       { "type": "or", "rules":
         [
@@ -527,6 +529,7 @@
     "type": "ico",
     "ext": "ico",
     "mime": "application/x-icon",
+    "iana": "image/vnd.microsoft.icon",
     "rules": [
       { "type": "equal", "start": 0, "end": 4, "bytes": "00000100" }
     ]
@@ -563,6 +566,7 @@
     "type": "sqlite",
     "ext": "sqlite",
     "mime": "application/x-sqlite3",
+    "iana": "application/vnd.sqlite3",
     "rules": [
       { "type": "equal", "start": 0, "end": 4, "bytes": "53514c69" }
     ]
