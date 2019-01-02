@@ -591,6 +591,15 @@
   },
 
   {
+    "type": "elf",
+    "ext": "elf",
+    "mime": "application/x-executable",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "7f454c46" }
+    ]
+  },
+
+  {
     "type": "cab",
     "ext": "cab",
     "mime": "application/vnd.ms-cab-compressed",
