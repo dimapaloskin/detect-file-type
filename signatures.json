@@ -582,6 +582,15 @@
   },
 
   {
+    "type": "dex",
+    "ext": "dex",
+    "mime": "application/x-dex",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "6465780a" }
+    ]
+  },
+
+  {
     "type": "crx",
     "ext": "crx",
     "mime": "application/x-google-chrome-extension",
