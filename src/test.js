@@ -213,8 +213,30 @@ describe('file formats', () => {
     });
   });
 
-  it('should detect mp4', (done) => {
+  it('should detect mp4 (M4V+M4A)', (done) => {
     detect.fromFile('./files/fixture.mp4', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'mp4',
+        mime: 'video/mp4'
+      });
+      done();
+    });
+  });
+
+  it('should detect mp4 (mpeg42)', (done) => {
+    detect.fromFile('./files/fixture-mpeg42.mp4', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'mp4',
+        mime: 'video/mp4'
+      });
+      done();
+    });
+  });
+
+  it('should detect mp4 (isom)', (done) => {
+    detect.fromFile('./files/fixture-isom.mp4', (err, result) => {
       assert.equal(err, null);
       assert.deepEqual(result, {
         ext: 'mp4',
@@ -229,7 +251,8 @@ describe('file formats', () => {
       assert.equal(err, null);
       assert.deepEqual(result, {
         ext: 'm4v',
-        mime: 'video/x-m4v'
+        mime: 'video/x-m4v',
+        iana: 'video/mp4'
       });
       done();
     });
@@ -306,7 +329,8 @@ describe('file formats', () => {
       assert.equal(err, null);
       assert.deepEqual(result, {
         ext: 'm4a',
-        mime: 'audio/m4a'
+        mime: 'audio/x-m4a',
+        iana: 'audio/mp4'
       });
       done();
     });
