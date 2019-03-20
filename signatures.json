@@ -521,6 +521,15 @@
   },
 
   {
+    "type": "blend",
+    "ext": "blend",
+    "mime": "application/x-blender",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 7, "bytes": "424c454e444552", "desc": "BLENDER" }
+    ]
+  },
+
+  {
     "type": "exe",
     "ext": "exe",
     "mime": "application/x-msdownload",
