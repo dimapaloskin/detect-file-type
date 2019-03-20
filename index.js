@@ -19,6 +19,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var customFunctions = [];
 
 var noopCallback = function noopCallback() {};
+var DEFAULT_BUFFER_SIZE = 500;
 
 exports.default = {
   fromFile: function fromFile(filePath, bufferLength, callback) {
@@ -41,32 +42,38 @@ exports.default = {
           return callback(err);
         }
 
-        var bufferSize = bufferLength;
-        if (!bufferSize) {
-          bufferSize = 500;
-        }
-
-        if (fileSize < bufferSize) {
-          bufferSize = fileSize;
-        }
-
-        var buffer = new Buffer(bufferSize);
-
-        _fs2.default.read(fd, buffer, 0, bufferSize, 0, function (err, data) {
-
-          _fs2.default.close(fd, noopCallback);
-
-          if (err) {
-            return callback(err);
-          }
-
-          _this.fromBuffer(buffer, callback);
-        });
+        _this.fromFd(fd, Math.min(bufferLength || DEFAULT_BUFFER_SIZE, fileSize), callback);
       });
     });
   },
-  fromBuffer: function fromBuffer(buffer, callback) {
+  fromFd: function fromFd(fd, bufferLength, callback) {
     var _this2 = this;
+
+    if (typeof bufferLength === 'function') {
+      callback = bufferLength;
+      bufferLength = undefined;
+    }
+
+    var bufferSize = bufferLength;
+    if (!bufferSize) {
+      bufferSize = DEFAULT_BUFFER_SIZE;
+    }
+
+    var buffer = new Buffer(bufferSize);
+
+    _fs2.default.read(fd, buffer, 0, bufferSize, 0, function (err, data) {
+
+      _fs2.default.close(fd, noopCallback);
+
+      if (err) {
+        return callback(err);
+      }
+
+      _this2.fromBuffer(buffer, callback);
+    });
+  },
+  fromBuffer: function fromBuffer(buffer, callback) {
+    var _this3 = this;
 
     var result = null;
 
@@ -76,7 +83,7 @@ exports.default = {
     }
 
     _signatures2.default.every(function (signature) {
-      if (_this2.detect(buffer, signature.rules)) {
+      if (_this3.detect(buffer, signature.rules)) {
         result = {
           ext: signature.ext,
           mime: signature.mime
@@ -103,7 +110,7 @@ exports.default = {
     callback(null, result);
   },
   detect: function detect(buffer, receivedRules, type) {
-    var _this3 = this;
+    var _this4 = this;
 
     if (!type) {
       type = 'and';
@@ -116,13 +123,13 @@ exports.default = {
       if (rule.type === 'equal') {
         var slicedHex = buffer.slice(rule.start || 0, rule.end || buffer.length).toString('hex');
         isDetected = slicedHex === rule.bytes;
-        return _this3.isReturnFalse(isDetected, type);
+        return _this4.isReturnFalse(isDetected, type);
       }
 
       if (rule.type === 'notEqual') {
         var _slicedHex = buffer.slice(rule.start || 0, rule.end || buffer.length).toString('hex');
         isDetected = !(_slicedHex === rule.bytes);
-        return _this3.isReturnFalse(isDetected, type);
+        return _this4.isReturnFalse(isDetected, type);
       }
 
       if (rule.type === 'contains') {
@@ -135,7 +142,7 @@ exports.default = {
           return isDetected;
         });
 
-        return _this3.isReturnFalse(isDetected, type);
+        return _this4.isReturnFalse(isDetected, type);
       }
 
       if (rule.type === 'notContains') {
@@ -147,17 +154,17 @@ exports.default = {
           isDetected = _slicedHex3.indexOf(bytes) === -1;
           return isDetected;
         });
-        return _this3.isReturnFalse(isDetected, type);
+        return _this4.isReturnFalse(isDetected, type);
       }
 
       if (rule.type === 'or') {
-        isDetected = _this3.detect(buffer, rule.rules, 'or');
-        return _this3.isReturnFalse(isDetected, type);
+        isDetected = _this4.detect(buffer, rule.rules, 'or');
+        return _this4.isReturnFalse(isDetected, type);
       }
 
       if (rule.type === 'and') {
-        isDetected = _this3.detect(buffer, rule.rules, 'and');
-        return _this3.isReturnFalse(isDetected, type);
+        isDetected = _this4.detect(buffer, rule.rules, 'and');
+        return _this4.isReturnFalse(isDetected, type);
       }
 
       return true;
@@ -182,10 +189,10 @@ exports.default = {
     return types.indexOf(rule.type) !== -1;
   },
   validateSigantures: function validateSigantures() {
-    var _this4 = this;
+    var _this5 = this;
 
     var invalidSignatures = _signatures2.default.map(function (signature) {
-      return _this4.validateSignature(signature);
+      return _this5.validateSignature(signature);
     });
 
     invalidSignatures = this.cleanArray(invalidSignatures);
@@ -237,10 +244,10 @@ exports.default = {
     }
   },
   validateRules: function validateRules(rules) {
-    var _this5 = this;
+    var _this6 = this;
 
     var invalidRules = rules.map(function (rule) {
-      var isRuleTypeValid = _this5.validateRuleType(rule);
+      var isRuleTypeValid = _this6.validateRuleType(rule);
 
       if (!isRuleTypeValid) {
         return {
@@ -257,7 +264,7 @@ exports.default = {
       }
 
       if (rule.type === 'or' || rule.type === 'and') {
-        return _this5.validateRules(rule.rules);
+        return _this6.validateRules(rule.rules);
       }
 
       return false;

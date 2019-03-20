@@ -4,6 +4,7 @@ import signatures from './signatures.json';
 const customFunctions = [];
 
 const noopCallback = function () {};
+const DEFAULT_BUFFER_SIZE = 500;
 
 export default {
 
@@ -26,29 +27,37 @@ export default {
           return callback(err);
         }
 
-
-        let bufferSize = bufferLength;
-        if (!bufferSize) {
-          bufferSize = 500;
-        }
-
-        if (fileSize < bufferSize) {
-          bufferSize = fileSize;
-        }
-
-        const buffer = new Buffer(bufferSize);
-
-        fs.read(fd, buffer, 0, bufferSize, 0, (err, data) => {
-
-          fs.close(fd, noopCallback);
-
-          if (err) {
-            return callback(err);
-          }
-
-          this.fromBuffer(buffer, callback);
-        });
+        this.fromFd(
+          fd,
+          Math.min(bufferLength || DEFAULT_BUFFER_SIZE, fileSize),
+          callback);
       });
+    });
+  },
+
+  fromFd(fd, bufferLength, callback) {
+
+    if (typeof bufferLength === 'function') {
+      callback = bufferLength;
+      bufferLength = undefined;
+    }
+
+    let bufferSize = bufferLength;
+    if (!bufferSize) {
+      bufferSize = DEFAULT_BUFFER_SIZE;
+    }
+
+    const buffer = new Buffer(bufferSize);
+
+    fs.read(fd, buffer, 0, bufferSize, 0, (err, data) => {
+
+      fs.close(fd, noopCallback);
+
+      if (err) {
+        return callback(err);
+      }
+
+      this.fromBuffer(buffer, callback);
     });
   },
 
