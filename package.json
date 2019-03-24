@@ -2,13 +2,14 @@
   "name": "detect-file-type",
   "version": "0.2.2",
   "description": "Detect file type by signature",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "node ./node_modules/babel-cli/bin/babel.js src/ -d ./",
-    "test": "npm run build && node ./node_modules/mocha/bin/mocha test.js"
+    "build": "babel -d lib src",
+    "prepublishOnly": "npm test && npm run build",
+    "test": "mocha --compilers js:babel-core/register tests/test.js"
   },
   "files": [
-    "index.js",
+    "lib/index.js",
     "signatures.json"
   ],
   "author": {
@@ -32,12 +33,12 @@
   ],
   "license": "WTFPL",
   "devDependencies": {
-    "babel-cli": "^6.11.4",
-    "babel-core": "^6.11.4",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.9.0",
     "chai": "^3.5.0",
     "is-html": "^1.0.0",
-    "mocha": "^2.5.3"
+    "mocha": "^3.2.0"
   }
 }

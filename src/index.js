@@ -1,5 +1,5 @@
 import fs from 'fs';
-import signatures from './signatures.json';
+import signatures from '../signatures.json';
 
 /** @type {(function(Buffer):FileTypeResult)[]} */
 const customFunctions = [];

@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import detect from './index';
+import detect from '../src/index';
 import isHtml from 'is-html';
 
 describe('custom function', () => {
