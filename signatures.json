@@ -27,19 +27,39 @@
   },
 
   {
-    "type": "bmp",
-    "ext": "bmp",
-    "mime": "image/bmp",
-    "rules": [
-      { "type": "equal", "start": 0,"end": 2, "bytes": "424d" }
-    ]
-  },
-  {
     "type": "webp",
     "ext": "webp",
     "mime": "image/webp",
     "rules": [
       { "type": "equal", "start": 8,"end": 12, "bytes": "57454250" }
+    ]
+  },
+
+  {
+    "type": "flif",
+    "ext": "flif",
+    "mime": "image/flif",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "464c4946" }
+    ]
+  },
+
+  {
+    "type": "cr2",
+    "ext": "cr2",
+    "mime": "image/x-canon-cr2",
+    "rules": [
+      { "type": "and", "rules":
+      [
+        { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 0, "end": 4, "bytes": "49492a00" },
+          { "type": "equal", "start": 0, "end": 4,  "bytes": "4d4d002a" }
+        ]
+        },
+        { "type": "equal", "start": 8, "end": 10, "bytes": "4352" }
+      ]
+      }
     ]
   },
 
@@ -63,21 +83,11 @@
   },
 
   {
-    "type": "cr2",
-    "ext": "cr2",
-    "mime": "image/x-canon-cr2",
+    "type": "bmp",
+    "ext": "bmp",
+    "mime": "image/bmp",
     "rules": [
-      { "type": "and", "rules":
-        [
-          { "type": "or", "rules":
-            [
-              { "type": "equal", "start": 0, "end": 4, "bytes": "49492a00" },
-              { "type": "equal", "start": 0, "end": 4,  "bytes": "4d4d002a" }
-            ]
-          },
-          { "type": "equal", "start": 8, "end": 10, "bytes": "4352" }
-        ]
-      }
+      { "type": "equal", "start": 0,"end": 2, "bytes": "424d" }
     ]
   },
 
@@ -96,15 +106,6 @@
     "mime": "image/vnd.adobe.photoshop",
     "rules": [
       { "type": "equal", "start": 0, "end": 4, "bytes": "38425053" }
-    ]
-  },
-
-  {
-    "type": "flif",
-    "ext": "flif",
-    "mime": "image/flif",
-    "rules": [
-      { "type": "equal", "start": 0, "end": 4, "bytes": "464c4946" }
     ]
   },
 
@@ -161,6 +162,7 @@
       { "type": "equal", "start": 257, "end": 262, "bytes": "7573746172" }
     ]
   },
+
   {
     "type": "rar",
     "ext": "rar",
@@ -175,6 +177,7 @@
       }
     ]
   },
+
   {
     "type": "gz",
     "ext": "gz",
@@ -183,6 +186,7 @@
       { "type": "equal", "start": 0, "end": 3, "bytes": "1f8b08" }
     ]
   },
+
   {
     "type": "bz2",
     "ext": "bz2",
@@ -191,6 +195,7 @@
       { "type": "equal", "start": 0, "end": 3, "bytes": "425a68" }
     ]
   },
+
   {
     "type": "7z",
     "ext": "7z",
@@ -199,6 +204,7 @@
       { "type": "equal", "start": 0, "end": 6, "bytes": "377abcaf271c" }
     ]
   },
+
   {
     "type": "dmg",
     "ext": "dmg",
@@ -450,6 +456,24 @@
   },
 
   {
+    "type": "ape",
+    "ext": "ape",
+    "mime": "audio/ape",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "4d414320" }
+    ]
+  },
+
+  {
+    "type": "wv",
+    "ext": "wv",
+    "mime": "audio/wavpack",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "7776706b" }
+    ]
+  },
+
+  {
     "type": "amr",
     "ext": "amr",
     "mime": "audio/amr",
@@ -459,29 +483,11 @@
   },
 
   {
-    "type": "mxf",
-    "ext": "mxf",
-    "mime": "application/mxf",
-    "rules": [
-      { "type": "equal", "start": 0, "end": 5, "bytes": "060e2b3402" }
-    ]
-  },
-
-  {
     "type": "pdf",
     "ext": "pdf",
     "mime": "application/pdf",
     "rules": [
       { "type": "equal", "start": 0, "end": 4, "bytes": "25504446" }
-    ]
-  },
-
-  {
-    "type": "blend",
-    "ext": "blend",
-    "mime": "application/x-blender",
-    "rules": [
-      { "type": "equal", "start": 0, "end": 7, "bytes": "424c454e444552", "desc": "BLENDER" }
     ]
   },
 
@@ -606,6 +612,16 @@
   },
 
   {
+    "type": "cur",
+    "ext": "cur",
+    "mime": "image/x-icon",
+    "iana": "image/vnd.microsoft.icon",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "00000200" }
+    ]
+  },
+
+  {
     "type": "flv",
     "ext": "flv",
     "mime": "video/x-flv",
@@ -693,21 +709,21 @@
   },
 
   {
+    "type": "deb",
+    "ext": "deb",
+    "mime": "application/x-deb",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 21, "bytes": "213c617263683e0a64656269616e2d62696e617279" }
+    ]
+  },
+
+  {
     "type": "ar",
     "ext": "ar",
     "mime": "application/x-unix-archive",
     "rules": [
       { "type": "equal", "start": 0, "end": 7, "bytes": "213c617263683e" },
       { "type": "notEqual", "start": 0, "end": 21, "bytes": "213c617263683e0a64656269616e2d62696e617279" }
-    ]
-  },
-
-  {
-    "type": "deb",
-    "ext": "deb",
-    "mime": "application/x-deb",
-    "rules": [
-      { "type": "equal", "start": 0, "end": 21, "bytes": "213c617263683e0a64656269616e2d62696e617279" }
     ]
   },
 
@@ -753,11 +769,210 @@
   },
 
   {
+    "type": "mxf",
+    "ext": "mxf",
+    "mime": "application/mxf",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 14, "bytes": "060e2b34020501010d0102010102" }
+    ]
+  },
+
+  {
+    "type": "mts",
+    "ext": "mts",
+    "mime": "video/mp2t",
+    "rules": [
+      { "type": "and", "rules":
+      [
+        { "type": "equal", "start": 4, "end": 5, "bytes": "47" },
+        { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 192, "end": 193, "bytes": "47" },
+          { "type": "equal", "start": 196, "end": 197, "bytes": "47" }
+        ]
+        }
+      ]
+      }
+    ]
+  },
+
+  {
+    "type": "blend",
+    "ext": "blend",
+    "mime": "application/x-blender",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 7, "bytes": "424c454e444552", "desc": "BLENDER" }
+    ]
+  },
+
+  {
+    "type": "bpg",
+    "ext": "bpg",
+    "mime": "image/bpg",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "425047fb" }
+    ]
+  },
+
+  {
+    "type": "jpeg-2000",
+    "rules": [
+      { "type": "and", "rules": [
+        { "type": "equal", "start": 0, "end": 12, "bytes": "0000000c6a5020200d0a870a" },
+        { "type": "or", "rules": [
+
+          { "type": "equal", "start": 20, "end": 24, "bytes": "6a703220",
+            "ext": "jp2", "mime": "image/jp2"
+          },
+
+          { "type": "equal", "start": 20, "end": 24, "bytes": "6a707820",
+            "ext": "jpx", "mime": "image/jpx"
+          },
+
+          { "type": "equal", "start": 20, "end": 24, "bytes": "6a706d20",
+            "ext": "jpm", "mime": "image/jpm"
+          },
+
+          { "type": "equal", "start": 20, "end": 24, "bytes": "6d6a7032",
+            "ext": "mj2", "mime": "image/mj2"
+          }
+
+        ] }
+      ] }
+    ]
+  },
+
+  {
+    "type": "aif",
+    "ext": "aif",
+    "mime": "audio/aiff",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 4, "bytes": "464f524d" }
+    ]
+  },
+
+  {
+    "type": "xml",
+    "ext": "xml",
+    "mime": "application/xml",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 6, "bytes": "3c3f786d6c20", "desc": "<?xml " }
+    ]
+  },
+
+  {
     "type": "svg",
     "ext": "svg",
     "mime": "image/svg+xml",
     "rules": [
       { "type": "contains", "bytes": "3c737667" }
+    ]
+  },
+
+  {
+    "type": "mobi",
+    "ext": "mobi",
+    "mime": "application/x-mobipocket-ebook",
+    "rules": [
+      { "type": "equal", "start": 60, "end": 68, "bytes": "424f4f4b4d4f4249" }
+    ]
+  },
+
+  {
+    "type": "heic",
+    "rules": [
+      { "type": "and", "rules":
+      [
+        { "type": "equal", "start": 4, "end": 8, "bytes": "66747970" },
+        { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 8, "end": 12, "bytes": "6d696631",
+            "ext": "heic", "mime": "image/heif" },
+
+          { "type": "equal", "start": 8, "end": 12, "bytes": "6d736631",
+            "ext": "heic", "mime": "image/heif-sequence" },
+
+          { "type": "or", "rules":
+          [
+            { "type": "equal", "start": 8, "end": 12, "bytes": "68656963" },
+            { "type": "equal", "start": 8, "end": 12, "bytes": "68656978" }
+          ], "ext": "heic", "mime": "image/heic"
+          },
+
+          { "type": "or", "rules":
+          [
+            { "type": "equal", "start": 8, "end": 12, "bytes": "68657663" },
+            { "type": "equal", "start": 8, "end": 12, "bytes": "68657678" }
+          ], "ext": "heic", "mime": "image/heic-sequence"
+          }
+        ]
+        }
+      ]
+      }
+    ]
+  },
+
+  {
+    "type": "ktx",
+    "ext": "ktx",
+    "mime": "image/ktx",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 12, "bytes": "ab4b5458203131bb0d0a1a0a" }
+    ]
+  },
+
+  {
+    "type": "dcm",
+    "ext": "dcm",
+    "mime": "application/dicom",
+    "rules": [
+      { "type": "equal", "start": 128, "end": 132, "bytes": "4449434d" }
+    ]
+  },
+
+  {
+    "type": "mpc",
+    "ext": "mpc",
+    "mime": "audio/x-musepack",
+    "rules": [
+      { "type": "or", "rules":
+      [
+        { "type": "equal", "start": 0, "end": 3, "bytes": "4d502b" },
+        { "type": "equal", "start": 0, "end": 4, "bytes": "4d50434b" }
+      ]
+      }
+    ]
+  },
+
+  {
+    "type": "ics",
+    "ext": "ics",
+    "mime": "text/calendar",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 6, "bytes": "424547494e3a" }
+    ]
+  },
+
+  {
+    "type": "glb",
+    "ext": "glb",
+    "mime": "model/gltf-binary",
+    "rules": [
+      { "type": "equal", "start": 0, "end": 8, "bytes": "676c544602000000" }
+    ]
+  },
+
+  {
+    "type": "pcap",
+    "ext": "pcap",
+    "mime": "application/vnd.tcpdump.pcap",
+    "rules": [
+      { "type": "or", "rules":
+      [
+        { "type": "equal", "start": 0, "end": 4, "bytes": "d4c3b2a1" },
+        { "type": "equal", "start": 0, "end": 4, "bytes": "a1b2c3d4" }
+      ]
+      }
     ]
   },
 
