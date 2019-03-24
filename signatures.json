@@ -4,7 +4,7 @@
     "ext": "jpg",
     "mime": "image/jpeg",
     "rules": [
-      { "type": "equal", "start": 0, "end": 2, "bytes": "ffd8"  }
+      { "type": "equal", "start": 0, "end": 3, "bytes": "ffd8ff"  }
     ]
   },
 
