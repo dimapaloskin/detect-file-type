@@ -1,6 +1,7 @@
 import fs from 'fs';
 import signatures from './signatures.json';
 
+/** @type {(function(Buffer):FileTypeResult)[]} */
 const customFunctions = [];
 
 const noopCallback = () => {};
@@ -8,8 +9,21 @@ const DEFAULT_BUFFER_SIZE = 500;
 
 let validatedSignaturesCache = false;
 
+/**
+ * @typedef {Object} FileTypeResult
+ * @property {string} ext
+ * @property {string} mime
+ * @property {string=} iana
+ */
+/** */
+
 class DetectFileType {
 
+  /**
+   * @param {string} filePath 
+   * @param {number=} bufferLength 
+   * @param {function(Error=,FileTypeResult)} callback 
+   */
   static fromFile(filePath, bufferLength, callback) {
 
     if (typeof bufferLength === 'function') {
@@ -37,6 +51,11 @@ class DetectFileType {
     });
   }
 
+  /**
+   * @param {number} fd 
+   * @param {number=} bufferLength 
+   * @param {function(Error=,FileTypeResult)} callback 
+   */
   static fromFd(fd, bufferLength, callback) {
 
     if (typeof bufferLength === 'function') {
@@ -63,6 +82,10 @@ class DetectFileType {
     });
   }
 
+  /**
+   * @param {Buffer} buffer 
+   * @param {function(Error=,FileTypeResult)} callback 
+   */
   static fromBuffer(buffer, callback) {
 
     let result = null;
@@ -105,10 +128,12 @@ class DetectFileType {
     signatures.push(signature);
   }
 
+  /** @param {function(Buffer):FileTypeResult} fn */
   static addCustomFunction(fn) {
     customFunctions.push(fn);
   }
 
+  /** @private */
   static _detect(buffer, rules, type) {
     if (!type) {
       type = 'and';
@@ -196,6 +221,7 @@ class DetectFileType {
     return detectedRule;
   }
 
+  /** @private */
   static _isReturnFalse(isDetected, type) {
     if (!isDetected && type === 'and') {
       return false;
@@ -208,11 +234,13 @@ class DetectFileType {
     return true;
   }
 
+  /** @private */
   static _validateRuleType(rule) {
     const types = ['or', 'and', 'contains', 'notContains', 'equal', 'notEqual', 'default'];
     return (types.indexOf(rule.type) !== -1);
   }
 
+  /** @private */
   static _validateSigantures() {
 
     let invalidSignatures = signatures
@@ -228,6 +256,7 @@ class DetectFileType {
     return true;
   }
 
+  /** @private */
   static _validateSignature(signature) {
 
     if (!('type' in signature)) {
@@ -269,6 +298,7 @@ class DetectFileType {
     }
   }
 
+  /** @private */
   static _validateRules(rules) {
 
     let validations = rules.map((rule) => {
@@ -310,6 +340,7 @@ class DetectFileType {
     };
   }
 
+  /** @private */
   static _getFileSize(filePath, callback) {
     fs.stat(filePath, (err, stat) => {
       if (err) {
@@ -320,11 +351,12 @@ class DetectFileType {
     });
   }
 
-  static _getRuleDetection(...args) {
+  /** @private */
+  static _getRuleDetection() {
     let v = false;
   
-    for (let i = 0, len = args.length; i < len; i++) {
-      let detection = args[i];
+    for (let i = 0, len = arguments.length; i < len; i++) {
+      let detection = arguments[i];
   
       if (typeof detection === 'boolean') {
           v = detection ? v || detection : false;
@@ -342,4 +374,5 @@ class DetectFileType {
 
 };
 
+/** @type {typeof DetectFileType} */
 module.exports = DetectFileType;
