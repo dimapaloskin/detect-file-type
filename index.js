@@ -14,12 +14,35 @@ var _signatures2 = _interopRequireDefault(_signatures);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 var customFunctions = [];
 
 var noopCallback = function noopCallback() {};
 var DEFAULT_BUFFER_SIZE = 500;
+
+function getRuleDetection() {
+  var v = false;
+
+  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  for (var i = 0, len = args.length; i < len; i++) {
+    var detection = args[i];
+
+    if (typeof detection === 'boolean') {
+      v = detection ? v || detection : false;
+    } else {
+      v = typeof v === 'boolean' ? {} : v;
+      if ('ext' in detection) v.ext = detection.ext;
+      if ('mime' in detection) v.mime = detection.mime;
+      if ('iana' in detection) v.iana = detection.iana;
+    }
+  }
+
+  return v;
+}
+
+var validatedSignaturesCache = false;
 
 exports.default = {
   fromFile: function fromFile(filePath, bufferLength, callback) {
@@ -77,22 +100,22 @@ exports.default = {
 
     var result = null;
 
-    var invalidSignaturesList = this.validateSigantures();
-    if (invalidSignaturesList.length) {
-      return callback(invalidSignaturesList);
+    if (!validatedSignaturesCache) {
+      validatedSignaturesCache = this.validateSigantures();
+    }
+
+    if (Array.isArray(validatedSignaturesCache)) {
+      return callback(validatedSignaturesCache);
     }
 
     _signatures2.default.every(function (signature) {
-      if (_this3.detect(buffer, signature.rules)) {
-        result = {
-          ext: signature.ext,
-          mime: signature.mime
-        };
+      var detection = _this3.detect(buffer, signature.rules);
 
-        if (signature.iana) result.iana = signature.iana;
-
+      if (detection) {
+        result = getRuleDetection({}, signature, detection);
         return false;
       }
+
       return true;
     });
 
@@ -109,57 +132,69 @@ exports.default = {
 
     callback(null, result);
   },
-  detect: function detect(buffer, receivedRules, type) {
+  detect: function detect(buffer, rules, type) {
     var _this4 = this;
 
     if (!type) {
       type = 'and';
     }
 
-    var rules = [].concat(_toConsumableArray(receivedRules));
+    var detectedRule = true;
 
-    var isDetected = true;
     rules.every(function (rule) {
       if (rule.type === 'equal') {
         if (!(rule.bytes instanceof Buffer)) rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
         var end = Math.min(typeof rule.end === 'number' ? rule.end : buffer.length, buffer.length);
-        isDetected = buffer.compare(rule.bytes, undefined, undefined, rule.start || 0, end) === 0;
-        return _this4.isReturnFalse(isDetected, type);
+
+        detectedRule = getRuleDetection(detectedRule, buffer.compare(rule.bytes, undefined, undefined, rule.start || 0, end) === 0 ? rule : false);
+
+        return _this4.isReturnFalse(detectedRule, type);
       }
 
       if (rule.type === 'notEqual') {
         if (!(rule.bytes instanceof Buffer)) rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
         var _end = Math.min(typeof rule.end === 'number' ? rule.end : buffer.length, buffer.length);
-        isDetected = buffer.compare(rule.bytes, undefined, undefined, rule.start || 0, _end) !== 0;
-        return _this4.isReturnFalse(isDetected, type);
+
+        detectedRule = getRuleDetection(detectedRule, buffer.compare(rule.bytes, undefined, undefined, rule.start || 0, _end) !== 0 ? rule : false);
+
+        return _this4.isReturnFalse(detectedRule, type);
       }
 
       if (rule.type === 'contains') {
         if (!(rule.bytes instanceof Buffer)) rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
-        isDetected = buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes);
-        return _this4.isReturnFalse(isDetected, type);
+
+        detectedRule = getRuleDetection(detectedRule, buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes) ? rule : false);
+
+        return _this4.isReturnFalse(detectedRule, type);
       }
 
       if (rule.type === 'notContains') {
         if (!(rule.bytes instanceof Buffer)) rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
-        isDetected = !buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes);
-        return _this4.isReturnFalse(isDetected, type);
+
+        detectedRule = getRuleDetection(detectedRule, !buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes) ? rule : false);
+
+        return _this4.isReturnFalse(detectedRule, type);
       }
 
       if (rule.type === 'or') {
-        isDetected = _this4.detect(buffer, rule.rules, 'or');
-        return _this4.isReturnFalse(isDetected, type);
+        detectedRule = getRuleDetection(detectedRule, _this4.detect(buffer, rule.rules, 'or'));
+        return _this4.isReturnFalse(detectedRule, type);
       }
 
       if (rule.type === 'and') {
-        isDetected = _this4.detect(buffer, rule.rules, 'and');
-        return _this4.isReturnFalse(isDetected, type);
+        detectedRule = getRuleDetection(detectedRule, _this4.detect(buffer, rule.rules, 'and'));
+        return _this4.isReturnFalse(detectedRule, type);
+      }
+
+      if (rule.type === 'default') {
+        detectedRule = getRuleDetection(detectedRule, rule);
+        return _this4.isReturnFalse(detectedRule, type);
       }
 
       return true;
     });
 
-    return isDetected;
+    return detectedRule;
   },
   isReturnFalse: function isReturnFalse(isDetected, type) {
     if (!isDetected && type === 'and') {
@@ -173,8 +208,7 @@ exports.default = {
     return true;
   },
   validateRuleType: function validateRuleType(rule) {
-
-    var types = ['or', 'and', 'contains', 'notContains', 'equal', 'notEqual'];
+    var types = ['or', 'and', 'contains', 'notContains', 'equal', 'notEqual', 'default'];
     return types.indexOf(rule.type) !== -1;
   },
   validateSigantures: function validateSigantures() {
@@ -182,9 +216,7 @@ exports.default = {
 
     var invalidSignatures = _signatures2.default.map(function (signature) {
       return _this5.validateSignature(signature);
-    });
-
-    invalidSignatures = this.cleanArray(invalidSignatures);
+    }).filter(Boolean);
 
     if (invalidSignatures.length) {
       return invalidSignatures;
@@ -201,20 +233,6 @@ exports.default = {
       };
     }
 
-    if (!('ext' in signature)) {
-      return {
-        message: 'signature does not contain "ext" field',
-        signature: signature
-      };
-    }
-
-    if (!('mime' in signature)) {
-      return {
-        message: 'signature does not contain "mime" field',
-        signature: signature
-      };
-    }
-
     if (!('rules' in signature)) {
       return {
         message: 'signature does not contain "rules" field',
@@ -222,25 +240,39 @@ exports.default = {
       };
     }
 
-    var invalidRules = this.validateRules(signature.rules);
+    var validations = this.validateRules(signature.rules);
 
-    if (invalidRules && invalidRules.length) {
+    if (!('ext' in signature) && !validations.hasExt) {
+      return {
+        message: 'signature does not contain "ext" field',
+        signature: signature
+      };
+    }
+
+    if (!('mime' in signature) && !validations.hasMime) {
+      return {
+        message: 'signature does not contain "mime" field',
+        signature: signature
+      };
+    }
+
+    if (Array.isArray(validations)) {
       return {
         message: 'signature has invalid rule',
         signature: signature,
-        rules: invalidRules
+        rules: validations
       };
     }
   },
   validateRules: function validateRules(rules) {
     var _this6 = this;
 
-    var invalidRules = rules.map(function (rule) {
+    var validations = rules.map(function (rule) {
       var isRuleTypeValid = _this6.validateRuleType(rule);
 
       if (!isRuleTypeValid) {
         return {
-          message: 'rule type does not supported',
+          message: 'rule type not supported',
           rule: rule
         };
       }
@@ -256,25 +288,32 @@ exports.default = {
         return _this6.validateRules(rule.rules);
       }
 
-      return false;
+      return {
+        hasExt: 'ext' in rule,
+        hasMime: 'mime' in rule
+      };
     });
 
-    invalidRules = this.cleanArray(invalidRules);
+    var invalid = validations.filter(function (x) {
+      return x.message;
+    });
+    var valid = validations.filter(function (x) {
+      return !x.message;
+    });
 
-    if (invalidRules.length) {
-      return invalidRules;
-    }
-  },
-  cleanArray: function cleanArray(actual) {
-    var newArray = new Array();
-    for (var i = 0; i < actual.length; i++) {
-      if (actual[i]) {
-        newArray.push(actual[i]);
-      }
-    }
-    return newArray;
+    if (!invalid) return invalid;
+
+    return {
+      hasExt: valid.some(function (x) {
+        return x.hasExt;
+      }),
+      hasMime: valid.some(function (x) {
+        return x.hasMime;
+      })
+    };
   },
   addSignature: function addSignature(signature) {
+    validatedSignaturesCache = false;
     _signatures2.default.push(signature);
   },
   addCustomFunction: function addCustomFunction(fn) {
