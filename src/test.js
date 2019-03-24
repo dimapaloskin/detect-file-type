@@ -251,8 +251,7 @@ describe('file formats', () => {
       assert.equal(err, null);
       assert.deepEqual(result, {
         ext: 'm4v',
-        mime: 'video/x-m4v',
-        iana: 'video/mp4'
+        mime: 'video/mp4'
       });
       done();
     });
@@ -329,8 +328,18 @@ describe('file formats', () => {
       assert.equal(err, null);
       assert.deepEqual(result, {
         ext: 'm4a',
-        mime: 'audio/x-m4a',
-        iana: 'audio/mp4'
+        mime: 'audio/mp4'
+      });
+      done();
+    });
+  });
+
+  it('should detect 3gpp', (done) => {
+    detect.fromFile('./files/fixture.3gp', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: '3gp',
+        mime: 'video/3gpp'
       });
       done();
     });
