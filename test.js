@@ -259,8 +259,7 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'm4v',
-        mime: 'video/x-m4v',
-        iana: 'video/mp4'
+        mime: 'video/mp4'
       });
       done();
     });
@@ -337,8 +336,18 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'm4a',
-        mime: 'audio/x-m4a',
-        iana: 'audio/mp4'
+        mime: 'audio/mp4'
+      });
+      done();
+    });
+  });
+
+  it('should detect 3gpp', function (done) {
+    _index2.default.fromFile('./files/fixture.3gp', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: '3gp',
+        mime: 'video/3gpp'
       });
       done();
     });
@@ -360,6 +369,39 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'ogg',
+        mime: 'audio/ogg'
+      });
+      done();
+    });
+  });
+
+  it('should detect oga', function (done) {
+    _index2.default.fromFile('./files/fixture.oga', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'oga',
+        mime: 'audio/ogg'
+      });
+      done();
+    });
+  });
+
+  it('should detect ogv', function (done) {
+    _index2.default.fromFile('./files/fixture.ogv', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'ogv',
+        mime: 'video/ogg'
+      });
+      done();
+    });
+  });
+
+  it('should detect spx', function (done) {
+    _index2.default.fromFile('./files/fixture.spx', function (err, result) {
+      _chai.assert.equal(err, null);
+      _chai.assert.deepEqual(result, {
+        ext: 'spx',
         mime: 'audio/ogg'
       });
       done();
@@ -472,7 +514,8 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'woff',
-        mime: 'application/font-woff'
+        mime: 'application/font-woff',
+        iana: 'font/woff'
       });
       done();
     });
@@ -483,7 +526,8 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'woff2',
-        mime: 'application/font-woff'
+        mime: 'application/font-woff',
+        iana: 'font/woff2'
       });
       done();
     });
@@ -494,7 +538,7 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'eot',
-        mime: 'application/octet-stream'
+        mime: 'application/vnd.ms-fontobject'
       });
       done();
     });
@@ -505,7 +549,8 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'ttf',
-        mime: 'application/font-sfnt'
+        mime: 'application/font-sfnt',
+        iana: 'font/ttf'
       });
       done();
     });
@@ -516,7 +561,8 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'otf',
-        mime: 'application/font-sfnt'
+        mime: 'application/font-sfnt',
+        iana: 'font/otf'
       });
       done();
     });
@@ -527,8 +573,8 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'ico',
-        mime: 'application/x-icon',
-        iana: "image/vnd.microsoft.icon"
+        mime: 'image/x-icon',
+        iana: 'image/vnd.microsoft.icon'
       });
       done();
     });
@@ -539,7 +585,7 @@ describe('file formats', function () {
       _chai.assert.equal(err, null);
       _chai.assert.deepEqual(result, {
         ext: 'flv',
-        mime: 'application/x-flv'
+        mime: 'video/x-flv'
       });
       done();
     });
