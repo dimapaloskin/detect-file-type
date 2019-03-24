@@ -3,41 +3,21 @@ import signatures from './signatures.json';
 
 const customFunctions = [];
 
-const noopCallback = function () {};
+const noopCallback = () => {};
 const DEFAULT_BUFFER_SIZE = 500;
-
-function getRuleDetection(...args) {
-  let v = false;
-
-  for (let i = 0, len = args.length; i < len; i++) {
-    let detection = args[i];
-
-    if (typeof detection === 'boolean') {
-        v = detection ? v || detection : false;
-    }
-    else {
-      v = typeof v === 'boolean' ? {} : v;
-      if ('ext' in detection) v.ext = detection.ext;
-      if ('mime' in detection) v.mime = detection.mime;
-      if ('iana' in detection) v.iana = detection.iana;
-    }
-  }
-
-  return v;
-}
 
 let validatedSignaturesCache = false;
 
-export default {
+class DetectFileType {
 
-  fromFile(filePath, bufferLength, callback) {
+  static fromFile(filePath, bufferLength, callback) {
 
     if (typeof bufferLength === 'function') {
       callback = bufferLength;
       bufferLength = undefined;
     }
 
-    this.getFileSize(filePath, (err, fileSize) => {
+    DetectFileType._getFileSize(filePath, (err, fileSize) => {
 
       if (err) {
         return callback(err);
@@ -49,15 +29,15 @@ export default {
           return callback(err);
         }
 
-        this.fromFd(
+        DetectFileType.fromFd(
           fd,
           Math.min(bufferLength || DEFAULT_BUFFER_SIZE, fileSize),
           callback);
       });
     });
-  },
+  }
 
-  fromFd(fd, bufferLength, callback) {
+  static fromFd(fd, bufferLength, callback) {
 
     if (typeof bufferLength === 'function') {
       callback = bufferLength;
@@ -79,16 +59,16 @@ export default {
         return callback(err);
       }
 
-      this.fromBuffer(buffer, callback);
+      DetectFileType.fromBuffer(buffer, callback);
     });
-  },
+  }
 
-  fromBuffer(buffer, callback) {
+  static fromBuffer(buffer, callback) {
 
     let result = null;
 
     if (!validatedSignaturesCache) {
-      validatedSignaturesCache = this.validateSigantures();
+      validatedSignaturesCache = DetectFileType._validateSigantures();
     }
 
     if (Array.isArray(validatedSignaturesCache)) {
@@ -96,10 +76,10 @@ export default {
     }
 
     signatures.every((signature) => {
-      let detection = this.detect(buffer, signature.rules);
+      let detection = DetectFileType._detect(buffer, signature.rules);
 
       if (detection) {
-        result = getRuleDetection({}, signature, detection);
+        result = DetectFileType._getRuleDetection({}, signature, detection);
         return false;
       }
 
@@ -118,9 +98,18 @@ export default {
     }
 
     callback(null, result);
-  },
+  }
 
-  detect(buffer, rules, type) {
+  static addSignature(signature) {
+    validatedSignaturesCache = false;
+    signatures.push(signature);
+  }
+
+  static addCustomFunction(fn) {
+    customFunctions.push(fn);
+  }
+
+  static _detect(buffer, rules, type) {
     if (!type) {
       type = 'and';
     }
@@ -133,14 +122,14 @@ export default {
           rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
         const end = Math.min(typeof rule.end === 'number' ? rule.end : buffer.length, buffer.length);
 
-        detectedRule = getRuleDetection(
+        detectedRule = this._getRuleDetection(
             detectedRule,
             buffer.compare(rule.bytes, undefined, undefined, rule.start || 0, end) === 0
                 ? rule
                 : false
         );
 
-        return this.isReturnFalse(detectedRule, type);
+        return this._isReturnFalse(detectedRule, type);
       }
 
       if (rule.type === 'notEqual') {
@@ -148,66 +137,66 @@ export default {
           rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
         const end = Math.min(typeof rule.end === 'number' ? rule.end : buffer.length, buffer.length);
 
-        detectedRule = getRuleDetection(
+        detectedRule = this._getRuleDetection(
             detectedRule,
             buffer.compare(rule.bytes, undefined, undefined, rule.start || 0, end) !== 0
                 ? rule
                 : false
         );
 
-        return this.isReturnFalse(detectedRule, type);
+        return this._isReturnFalse(detectedRule, type);
       }
 
       if (rule.type === 'contains') {
         if (!(rule.bytes instanceof Buffer))
           rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
 
-        detectedRule = getRuleDetection(
+        detectedRule = this._getRuleDetection(
             detectedRule,
             buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes)
                 ? rule
                 : false
         );
 
-        return this.isReturnFalse(detectedRule, type);
+        return this._isReturnFalse(detectedRule, type);
       }
 
       if (rule.type === 'notContains') {
         if (!(rule.bytes instanceof Buffer))
           rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
 
-        detectedRule = getRuleDetection(
+        detectedRule = this._getRuleDetection(
             detectedRule,
             !buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes)
                 ? rule
                 : false
         );
 
-        return this.isReturnFalse(detectedRule, type);
+        return this._isReturnFalse(detectedRule, type);
       }
 
       if (rule.type === 'or') {
-        detectedRule = getRuleDetection(detectedRule, this.detect(buffer, rule.rules, 'or'));
-        return this.isReturnFalse(detectedRule, type);
+        detectedRule = this._getRuleDetection(detectedRule, this._detect(buffer, rule.rules, 'or'));
+        return this._isReturnFalse(detectedRule, type);
       }
 
       if (rule.type === 'and') {
-        detectedRule = getRuleDetection(detectedRule, this.detect(buffer, rule.rules, 'and'));
-        return this.isReturnFalse(detectedRule, type);
+        detectedRule = this._getRuleDetection(detectedRule, this._detect(buffer, rule.rules, 'and'));
+        return this._isReturnFalse(detectedRule, type);
       }
 
       if (rule.type === 'default') {
-        detectedRule = getRuleDetection(detectedRule, rule);
-        return this.isReturnFalse(detectedRule, type);
+        detectedRule = this._getRuleDetection(detectedRule, rule);
+        return this._isReturnFalse(detectedRule, type);
       }
 
       return true;
     });
 
     return detectedRule;
-  },
+  }
 
-  isReturnFalse(isDetected, type) {
+  static _isReturnFalse(isDetected, type) {
     if (!isDetected && type === 'and') {
       return false;
     }
@@ -217,18 +206,18 @@ export default {
     }
 
     return true;
-  },
+  }
 
-  validateRuleType(rule) {
+  static _validateRuleType(rule) {
     const types = ['or', 'and', 'contains', 'notContains', 'equal', 'notEqual', 'default'];
     return (types.indexOf(rule.type) !== -1);
-  },
+  }
 
-  validateSigantures() {
+  static _validateSigantures() {
 
     let invalidSignatures = signatures
         .map((signature) => {
-          return this.validateSignature(signature);
+          return this._validateSignature(signature);
         })
         .filter(Boolean);
 
@@ -237,9 +226,9 @@ export default {
     }
 
     return true;
-  },
+  }
 
-  validateSignature(signature) {
+  static _validateSignature(signature) {
 
     if (!('type' in signature)) {
       return {
@@ -255,7 +244,7 @@ export default {
       };
     }
 
-    const validations = this.validateRules(signature.rules);
+    const validations = this._validateRules(signature.rules);
 
     if (!('ext' in signature) && !validations.hasExt) {
       return {
@@ -278,12 +267,12 @@ export default {
         rules: validations
       }
     }
-  },
+  }
 
-  validateRules(rules) {
+  static _validateRules(rules) {
 
     let validations = rules.map((rule) => {
-      let isRuleTypeValid = this.validateRuleType(rule);
+      let isRuleTypeValid = this._validateRuleType(rule);
 
       if (!isRuleTypeValid) {
         return {
@@ -300,7 +289,7 @@ export default {
       }
 
       if (rule.type === 'or' || rule.type === 'and') {
-        return this.validateRules(rule.rules);
+        return this._validateRules(rule.rules);
       }
 
       return {
@@ -319,18 +308,9 @@ export default {
       hasExt: valid.some(x => x.hasExt),
       hasMime: valid.some(x => x.hasMime),
     };
-  },
+  }
 
-  addSignature(signature) {
-    validatedSignaturesCache = false;
-    signatures.push(signature);
-  },
-
-  addCustomFunction(fn) {
-    customFunctions.push(fn);
-  },
-
-  getFileSize(filePath, callback) {
+  static _getFileSize(filePath, callback) {
     fs.stat(filePath, (err, stat) => {
       if (err) {
         return callback(err);
@@ -340,4 +320,26 @@ export default {
     });
   }
 
+  static _getRuleDetection(...args) {
+    let v = false;
+  
+    for (let i = 0, len = args.length; i < len; i++) {
+      let detection = args[i];
+  
+      if (typeof detection === 'boolean') {
+          v = detection ? v || detection : false;
+      }
+      else {
+        v = typeof v === 'boolean' ? {} : v;
+        if ('ext' in detection) v.ext = detection.ext;
+        if ('mime' in detection) v.mime = detection.mime;
+        if ('iana' in detection) v.iana = detection.iana;
+      }
+    }
+  
+    return v;
+  }
+
 };
+
+module.exports = DetectFileType;
