@@ -109,39 +109,32 @@ export default {
     let isDetected = true;
     rules.every((rule) => {
       if (rule.type === 'equal') {
-        const slicedHex = buffer.slice(rule.start || 0, rule.end || buffer.length).toString('hex');
-        isDetected = (slicedHex === rule.bytes);
+        if (!(rule.bytes instanceof Buffer))
+          rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
+        const end = Math.min(typeof rule.end === 'number' ? rule.end : buffer.length, buffer.length);
+        isDetected = buffer.compare(rule.bytes, undefined, undefined, rule.start || 0, end) === 0;
         return this.isReturnFalse(isDetected, type);
       }
 
       if (rule.type === 'notEqual') {
-        const slicedHex = buffer.slice(rule.start || 0, rule.end || buffer.length).toString('hex');
-        isDetected = !(slicedHex === rule.bytes);
+        if (!(rule.bytes instanceof Buffer))
+          rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
+        const end = Math.min(typeof rule.end === 'number' ? rule.end : buffer.length, buffer.length);
+        isDetected = buffer.compare(rule.bytes, undefined, undefined, rule.start || 0, end) !== 0;
         return this.isReturnFalse(isDetected, type);
       }
 
       if (rule.type === 'contains') {
-        const slicedHex = buffer.slice(rule.start || 0, rule.end || buffer.length).toString('hex');
-        if (typeof rule.bytes === 'string') {
-          rule.bytes = [rule.bytes];
-        }
-        rule.bytes.every((bytes) => {
-          isDetected = (slicedHex.indexOf(bytes) !== -1);
-          return isDetected;
-        });
-
+        if (!(rule.bytes instanceof Buffer))
+          rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
+        isDetected = buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes);
         return this.isReturnFalse(isDetected, type);
       }
 
       if (rule.type === 'notContains') {
-        const slicedHex = buffer.slice(rule.start || 0, rule.end || buffer.length).toString('hex');
-        if (typeof rule.bytes === 'string') {
-          rule.bytes = [rule.bytes];
-        }
-        rule.bytes.every((bytes) => {
-          isDetected = (slicedHex.indexOf(bytes) === -1);
-          return isDetected;
-        });
+        if (!(rule.bytes instanceof Buffer))
+          rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
+        isDetected = !buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes);
         return this.isReturnFalse(isDetected, type);
       }
 
