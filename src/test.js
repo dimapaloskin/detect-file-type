@@ -367,6 +367,39 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect oga', (done) => {
+    detect.fromFile('./files/fixture.oga', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'oga',
+        mime: 'audio/ogg'
+      });
+      done();
+    });
+  });
+
+  it('should detect ogv', (done) => {
+    detect.fromFile('./files/fixture.ogv', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'ogv',
+        mime: 'video/ogg'
+      });
+      done();
+    });
+  });
+
+  it('should detect spx', (done) => {
+    detect.fromFile('./files/fixture.spx', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'spx',
+        mime: 'audio/ogg'
+      });
+      done();
+    });
+  });
+
   it('should detect flac', (done) => {
     detect.fromFile('./files/fixture.flac', (err, result) => {
       assert.equal(err, null);

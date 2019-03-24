@@ -415,7 +415,27 @@
     "ext": "ogg",
     "mime": "audio/ogg",
     "rules": [
-      { "type": "equal", "start": 0, "end": 4, "bytes": "4f676753" },
+      { "type": "equal", "start": 0, "end": 4, "bytes": "4f676753", "desc": "OggS" },
+      { "type": "or", "rules":
+        [
+          { "type": "equal", "start": 28, "end": 35, "bytes": "807468656f7261", "desc": "\u0080theora",
+            "ext": "ogv", "mime": "video/ogg"
+          },
+          { "type": "equal", "start": 28, "end": 35, "bytes": "01766964656f00", "desc": "\u0001video\u0000",
+            "ext": "ogm", "mime": "video/ogg"
+          },
+          { "type": "equal", "start": 28, "end": 33, "bytes": "7f464c4143", "desc": "FLAC",
+            "ext": "oga", "mime": "audio/ogg"
+          },
+          { "type": "equal", "start": 28, "end": 35, "bytes": "53706565782020", "desc": "Speex  ",
+            "ext": "spx", "mime": "audio/ogg"
+          },
+          { "type": "equal", "start": 28, "end": 35, "bytes": "01766f72626973", "desc": "\u0001vorbis",
+            "ext": "ogg", "mime": "audio/ogg"
+          },
+          { "type": "default", "ext": "ogx", "mime": "application/ogg" }
+        ]
+      },
       { "type": "notEqual", "start": 28, "end": 36, "bytes": "4f70757348656164" }
     ]
   },
