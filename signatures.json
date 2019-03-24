@@ -511,6 +511,7 @@
     "type": "woff",
     "ext": "woff",
     "mime": "application/font-woff",
+    "iana": "font/woff",
     "rules": [
       { "type": "equal", "start": 0, "end": 4, "bytes": "774f4646" },
       { "type": "or", "rules":
@@ -526,6 +527,7 @@
     "type": "woff2",
     "ext": "woff2",
     "mime": "application/font-woff",
+    "iana": "font/woff2",
     "rules": [
       { "type": "equal", "start": 0, "end": 4, "bytes": "774f4632" },
       { "type": "or", "rules":
@@ -540,7 +542,7 @@
   {
     "type": "eot",
     "ext": "eot",
-    "mime": "application/octet-stream",
+    "mime": "application/vnd.ms-fontobject",
     "rules": [
       { "type": "equal", "start": 34, "end": 36, "bytes": "4c50" },
       { "type": "or", "rules":
@@ -557,6 +559,7 @@
     "type": "ttf",
     "ext": "ttf",
     "mime": "application/font-sfnt",
+    "iana": "font/ttf",
     "rules": [
       { "type": "equal", "start": 0, "end": 5, "bytes": "0001000000" }
     ]
@@ -566,6 +569,7 @@
     "type": "otf",
     "ext": "otf",
     "mime": "application/font-sfnt",
+    "iana": "font/otf",
     "rules": [
       { "type": "equal", "start": 0, "end": 5, "bytes": "4f54544f00" }
     ]
@@ -574,7 +578,7 @@
   {
     "type": "ico",
     "ext": "ico",
-    "mime": "application/x-icon",
+    "mime": "image/x-icon",
     "iana": "image/vnd.microsoft.icon",
     "rules": [
       { "type": "equal", "start": 0, "end": 4, "bytes": "00000100" }
@@ -584,7 +588,7 @@
   {
     "type": "flv",
     "ext": "flv",
-    "mime": "application/x-flv",
+    "mime": "video/x-flv",
     "rules": [
       { "type": "equal", "start": 0, "end": 4, "bytes": "464c5601" }
     ]
