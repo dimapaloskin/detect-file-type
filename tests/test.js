@@ -290,6 +290,17 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect wma', (done) => {
+    detect.fromFile('./files/fixture.wma', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'wma',
+        mime: 'audio/x-ms-wma'
+      });
+      done();
+    });
+  });
+
   it('should detect wmv', (done) => {
     detect.fromFile('./files/fixture.wmv', (err, result) => {
       assert.equal(err, null);

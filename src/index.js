@@ -98,6 +98,9 @@ class DetectFileType {
       return callback(validatedSignaturesCache);
     }
 
+    if (!(buffer instanceof Buffer))
+      buffer = Buffer.from(buffer);
+
     signatures.every((signature) => {
       let detection = DetectFileType._detect(buffer, signature.rules);
 
@@ -134,7 +137,7 @@ class DetectFileType {
   }
 
   /** @private */
-  static _detect(buffer, rules, type) {
+  static _detect(buffer, rules, type, searchData) {
     if (!type) {
       type = 'and';
     }
@@ -142,80 +145,102 @@ class DetectFileType {
     let detectedRule = true;
 
     rules.every((rule) => {
-      if (rule.type === 'equal') {
-        if (!(rule.bytes instanceof Buffer))
-          rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
-        const end = Math.min(typeof rule.end === 'number' ? rule.end : buffer.length, buffer.length);
 
-        detectedRule = this._getRuleDetection(
-            detectedRule,
-            buffer.compare(rule.bytes, undefined, undefined, rule.start || 0, end) === 0
-                ? rule
-                : false
-        );
+      let result = true;
 
-        return this._isReturnFalse(detectedRule, type);
-      }
+      // Process search rule
+      if (typeof rule.search === 'object') {
+        let searchRule = rule.search;
 
-      if (rule.type === 'notEqual') {
-        if (!(rule.bytes instanceof Buffer))
-          rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
-        const end = Math.min(typeof rule.end === 'number' ? rule.end : buffer.length, buffer.length);
+        // Elevate bytes into a buffer
+        if (!(searchRule.bytes instanceof Buffer))
+          searchRule.bytes = Buffer.from(searchRule.bytes, typeof searchRule.bytes === 'string' ? 'hex' : null);
 
-        detectedRule = this._getRuleDetection(
-            detectedRule,
-            buffer.compare(rule.bytes, undefined, undefined, rule.start || 0, end) !== 0
-                ? rule
-                : false
-        );
+        // Figure out start/end
+        let start = searchRule.start || 0;
+        let end = searchRule.end;
 
-        return this._isReturnFalse(detectedRule, type);
-      }
+        // Offset start/end based on a previous search
+        if (searchRule.hasOwnProperty('search_ref')) {
+          const index = searchData ? searchData.get(searchRule.search_ref) : -1;
+          if (index === -1) {
+            start = -1;
+          } else {
+            start += index;
+            end += index;
+          }
+        }
 
-      if (rule.type === 'contains') {
-        if (!(rule.bytes instanceof Buffer))
-          rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
+        // Limit end to buffer length (otherwise an error is thrown)
+        end = Math.min(typeof end === 'number' ? end : buffer.length, buffer.length);
 
-        detectedRule = this._getRuleDetection(
-            detectedRule,
-            buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes)
-                ? rule
-                : false
-        );
+        // Search for those bytes
+        let index = start === -1
+          ? -1
+          : buffer.indexOf(searchRule.bytes, undefined, undefined, start, end);
+        if (index < 0) {
+          detectedRule = this._getRuleDetection(detectedRule, false);
+          return this._isReturnFalse(detectedRule, type);
+        }
 
-        return this._isReturnFalse(detectedRule, type);
-      }
-
-      if (rule.type === 'notContains') {
-        if (!(rule.bytes instanceof Buffer))
-          rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
-
-        detectedRule = this._getRuleDetection(
-            detectedRule,
-            !buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes)
-                ? rule
-                : false
-        );
-
-        return this._isReturnFalse(detectedRule, type);
+        searchData = searchData || new Map();
+        searchData.set(searchRule.id, index);
       }
 
       if (rule.type === 'or') {
-        detectedRule = this._getRuleDetection(detectedRule, this._detect(buffer, rule.rules, 'or'));
-        return this._isReturnFalse(detectedRule, type);
+        result = this._detect(buffer, rule.rules, 'or', searchData);
+      }
+      else if (rule.type === 'and') {
+        result = this._detect(buffer, rule.rules, 'and', searchData);
+      }
+      else if (rule.type === 'default') {
+        result = rule;
+      }
+      else {
+        // Elevate bytes into a buffer
+        if (!(rule.bytes instanceof Buffer))
+          rule.bytes = Buffer.from(rule.bytes, typeof rule.bytes === 'string' ? 'hex' : null);
+
+        // Figure out start/end
+        let start = rule.start || 0;
+        let end = rule.end;
+
+        // Offset start/end based on a previous search
+        if (rule.hasOwnProperty('search_ref')) {
+          const index = searchData ? searchData.get(rule.search_ref) : -1;
+          if (index === -1) {
+            start = -1;
+          } else {
+            start += index;
+            end += index;
+          }
+        }
+
+        // Limit end to buffer length (otherwise an error is thrown)
+        end = Math.min(typeof end === 'number' ? end : buffer.length, buffer.length);
+
+        if (start < 0) {
+          result = false;
+        }
+        else if (rule.type === 'equal') {
+          result = buffer.compare(rule.bytes, undefined, undefined, start, end) === 0;
+        }
+        else if (rule.type === 'notEqual') {
+          result = buffer.compare(rule.bytes, undefined, undefined, rule.start || 0, end) !== 0;
+        }
+        else if (rule.type === 'contains') {
+          result = buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes);
+        }
+        else if (rule.type === 'notContains') {
+          result = !buffer.slice(rule.start || 0, rule.end || buffer.length).includes(rule.bytes);
+        }
       }
 
-      if (rule.type === 'and') {
-        detectedRule = this._getRuleDetection(detectedRule, this._detect(buffer, rule.rules, 'and'));
-        return this._isReturnFalse(detectedRule, type);
-      }
+      if (result === true)
+        result = rule;
 
-      if (rule.type === 'default') {
-        detectedRule = this._getRuleDetection(detectedRule, rule);
-        return this._isReturnFalse(detectedRule, type);
-      }
-
-      return true;
+      detectedRule = this._getRuleDetection(detectedRule, result);
+      return this._isReturnFalse(detectedRule, type);
     });
 
     return detectedRule;
@@ -372,7 +397,7 @@ class DetectFileType {
     return v;
   }
 
-};
+}
 
 /** @type {typeof DetectFileType} */
 module.exports = DetectFileType;
