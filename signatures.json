@@ -332,17 +332,18 @@
     "mime": "video/x-matroska",
     "rules": [
       { "type": "equal", "start": 0, "end": 4, "bytes": "1a45dfa3" },
-      { "type": "equal", "start": 31, "end": 39, "bytes": "6d6174726f736b61", "desc": "matroska" }
-    ]
-  },
-
-  {
-    "type": "webm",
-    "ext": "webm",
-    "mime": "video/webm",
-    "rules": [
-      { "type": "equal", "start": 0, "end": 4, "bytes": "1a45dfa3" },
-      { "type": "notEqual", "start": 31, "end": 39, "bytes": "6d6174726f736b61" }
+      {
+        "type": "or",
+        "search": { "id": 1, "start": 4, "end": 4096, "bytes": "4282" },
+        "rules":
+        [
+          { "type": "equal", "search_ref": 1, "start": 3, "end": 11, "bytes": "6d6174726f736b61", "desc": "matroska" },
+          { "type": "equal", "search_ref": 1, "start": 3, "end": 7, "bytes": "7765626d", "desc": "Webm",
+            "ext": "webm",
+            "mime": "video/webm"
+          }
+        ]
+      }
     ]
   },
 
