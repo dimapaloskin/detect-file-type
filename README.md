@@ -28,7 +28,7 @@
 
 ## API
 
-### fromFile(filePath, bufferLength, callback)
+### fromFile(filePath, bufferLength?, callback)
 Detect file type from hard disk
 - `filePath` - path to file
 - `bufferLength` - (optional) Buffer size (in bytes) starting from the start of file. By default 500. If size of file less than 500 bytes then param the same as size of the file
@@ -36,7 +36,13 @@ Detect file type from hard disk
 
 ### fromBuffer(buffer, callback)
 Detect file type from buffer
-- `buffer` - uint8array
+- `buffer` - uint8array/Buffer
+- `callback`
+
+### fromFd(fd, bufferLength?, callback)
+Detect file type from buffer
+- `fd` - file descriptor
+- `bufferLength` - (optional) Buffer size (in bytes) starting from the start of fd. By default 500. If size of file less than 500 bytes then param the same as size of the file
 - `callback`
 
 ### addSignature(siganture)
@@ -95,6 +101,7 @@ The simplest signature in JSON format looks like:
 params:
 - `type` - signature type, mostly it's the same as param 'ext'
 - `ext` - file extension
+- `iana` - optional iana registered mime type - will be added when actual used mime differs from iana, or when the old mime type we used was wrong
 - `mime` - mime type of file
 - `rules` - list of rules for detecting
 
@@ -102,9 +109,11 @@ More details about param `rules`:
 
 **This param have to be array of objects**
 
-- `type` - a rule type. There are available a few types: `equal`, `notEqual`, `contains`, `notContains`, `or`, `and`
+- `type` - a rule type. There are available a few types: `equal`, `notEqual`, `contains`, `notContains`, `or`, `and`, `default`
+- `search` - a searching rule, that keeps the offset of the searched bytes in a special id.
+- `search_ref` - a reference to a previously performed search, `start` and `end` will be offset by it.
 
-#### More details about: equal, notEqual, contains и notContains.
+#### More details about: equal, notEqual, contains & notContains.
 
 - `equal` - here is required field `bytes`. We get a dump of buffer from `start` (equals 0 by default) to `end` (equals buffer.length by default). After that we compare the dump with value in param `bytes`. If values are equal then this rule is correct.
 - `notEqual` - here is required field `bytes`. We get a dump of buffer from `start` (equals 0 by default) to `end` (equals buffer.length by default). After that we compare the dump with value in param `bytes`. If values aren't equal then this rule is correct.
@@ -142,6 +151,14 @@ Explanation: If dump starts from 8th byte and ends to 10th byte isn't equal "435
 - `and` - means that each rule from `rules` should be correct. If all rules are correct then list is correct. When at least 1 rule fail then all list is incorrect.
 
 The rules `or` and `and` can be nested without restrictions.
+
+The `default` type is special and is used as a fallback when a set of `or` rules did not match, inside a larger tree with multiple mime detections.
+
+#### More details about the `search` object
+
+- `id` - id to assign to the result (reference later with `search_ref`)
+- `start`/`end` - range to search in
+- `bytes` - bytes to search for
 
 [Documentation in Russian](README_RU.md)
 
