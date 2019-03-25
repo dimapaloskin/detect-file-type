@@ -98,6 +98,9 @@ class DetectFileType {
       return callback(validatedSignaturesCache);
     }
 
+    if (!(buffer instanceof Buffer))
+      buffer = Buffer.from(buffer);
+
     signatures.every((signature) => {
       let detection = DetectFileType._detect(buffer, signature.rules);
 
