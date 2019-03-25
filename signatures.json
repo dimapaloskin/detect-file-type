@@ -357,11 +357,33 @@
   },
 
   {
-    "type": "wmv",
-    "ext": "wmv",
-    "mime": "video/x-ms-wmv",
+    "type": "asf",
+    "ext": "asf",
+    "mime": "application/vnd.ms-asf",
     "rules": [
-      { "type": "equal", "start": 0, "end": 10, "bytes": "3026b2758e66cf11a6d9" }
+      { "type": "equal", "start": 0, "end": 10, "bytes": "3026b2758e66cf11a6d9" },
+      {
+        "type": "or", "rules":
+        [
+          {
+            "type": "and", "rules": [
+              { "type": "contains", "start": 10, "end": 1024, "bytes": "409e69f84d5bcf11a8fd00805f5c442b" },
+              { "type": "contains", "start": 10, "end": 1024, "bytes": "c0ef19bc4d5bcf11a8fd00805f5c442b" }
+            ],
+            "ext": "wmv",
+            "mime": "video/x-ms-asf"
+          },
+          { "type": "contains", "start": 10, "end": 1024, "bytes": "409e69f84d5bcf11a8fd00805f5c442b",
+            "ext": "wma",
+            "mime": "audio/x-ms-wma"
+          },
+          { "type": "contains", "start": 10, "end": 1024, "bytes": "c0ef19bc4d5bcf11a8fd00805f5c442b",
+            "ext": "wmv",
+            "mime": "video/x-ms-wmv"
+          },
+          { "type": "default", "desc": "fallback to generic asf" }
+        ]
+      }
     ]
   },
 
