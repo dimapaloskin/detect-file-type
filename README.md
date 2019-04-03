@@ -3,7 +3,7 @@
 > Detect file type by signatures. [file-type inspired](https://github.com/sindresorhus/file-type)
 
 ### Supported types (will be updated)
-  jpg, png, gif, bmp, webp, tif, cr2, jxr, psd, zip, epub, xpi, tar, rar, gz, bz2, 7z, dmg, mp4, m4v, midi, mkv, webm, wmv, mpg, mov, avi, mp3, m4a, opus, ogg, flac, wav, amr, pdf, exe, swf, rtf, woff, woff2, eot, ttf, otf, ico, ps, flv, xz, sqlite, nes, crx, cab, deb, rpm, Z, lz, msi, svg, flif, html
+  jpg, png, gif, webp, flif, cr2, tif, bmp, jxr, psd, zip, epub, xpi, tar, rar, gz, bz2, 7z, dmg, mov, mp4, m4v, m4a, 3g2, 3gp, avi, wav, qcp, mid, mkv, webm, wasm, asf, wmv, wma, mpg, mp3, opus, ogg, ogv, oga, ogm, ogx, spx, flac, ape, wv, amr, pdf, exe, swf, rtf, woff, woff2, eot, ttf, otf, ico, cur, flv, ps, xz, sqlite, nes, dex, crx, elf, cab, deb, ar, rpm, Z, lz, msi, mxf, mts, blend, bpg, jp2, jpx, jpm, mj2, aif, xml, svg, mobi, heic, ktx, dcm, mpc, ics, glb, pcap, html
 
 ## Installation
 
