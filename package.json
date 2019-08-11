@@ -9,7 +9,7 @@
     "test": "mocha --require @babel/register tests/test.js"
   },
   "files": [
-    "lib/index.js",
+    "src/index.js",
     "signatures.json"
   ],
   "author": {
