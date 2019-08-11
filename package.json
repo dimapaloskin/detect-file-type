@@ -2,7 +2,7 @@
   "name": "detect-file-type",
   "version": "0.2.5",
   "description": "Detect file type by signature",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "babel -d lib src",
     "prepublishOnly": "npm test && npm run build",
