@@ -738,6 +738,28 @@ describe('file formats', () => {
     });
   });
 
+  it('should detect svg with xml header', (done) => {
+    detect.fromFile('./files/fixture-header.svg', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'svg',
+        mime: 'image/svg+xml'
+      });
+      done();
+    });
+  });
+
+  it('should detect xml', (done) => {
+    detect.fromFile('./files/fixture.xml', (err, result) => {
+      assert.equal(err, null);
+      assert.deepEqual(result, {
+        ext: 'xml',
+        mime: 'application/xml'
+      });
+      done();
+    });
+  });
+
   it('should detect flif', (done) => {
     detect.fromFile('./files/fixture.flif', (err, result) => {
       assert.equal(err, null);

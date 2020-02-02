@@ -875,20 +875,30 @@
   },
 
   {
+    "type": "svg",
+    "ext": "svg",
+    "mime": "image/svg+xml",
+    "rules": [
+      { "type": "or", "rules":
+      [
+        { "type": "equal", "start": 0, "end": 4, "bytes": "3c737667", "desc": "<svg" },
+        { "type": "and", "rules":
+        [
+          { "type": "equal", "start": 0, "end": 6,  "bytes": "3c3f786d6c20", "desc": "<?xml " },
+          { "type": "contains", "bytes": "3c737667", "desc": "<svg" }
+        ]
+        }
+      ]
+      }
+    ]
+  },
+
+  {
     "type": "xml",
     "ext": "xml",
     "mime": "application/xml",
     "rules": [
       { "type": "equal", "start": 0, "end": 6, "bytes": "3c3f786d6c20", "desc": "<?xml " }
-    ]
-  },
-
-  {
-    "type": "svg",
-    "ext": "svg",
-    "mime": "image/svg+xml",
-    "rules": [
-      { "type": "contains", "bytes": "3c737667" }
     ]
   },
 
