@@ -1,11 +1,17 @@
 import fs from 'fs';
 import signatures from '../signatures.json';
+import Jschardet from 'jschardet';
+import Iconv from 'iconv-lite';
 
 /** @type {(function(Buffer):FileTypeResult)[]} */
 const customFunctions = [];
 
 const noopCallback = () => {};
 const DEFAULT_BUFFER_SIZE = 500;
+
+const iconvOptions = {
+  stripBOM: true,
+};
 
 let validatedSignaturesCache = false;
 
@@ -104,6 +110,16 @@ class DetectFileType {
     signatures.every((signature) => {
       let detection = DetectFileType._detect(buffer, signature.rules);
 
+      if (!detection && signature.recode_text === true) {
+        let textBuffer = DetectFileType._getTextBuffer(buffer);
+        if (textBuffer !== null) {
+          detection = DetectFileType._detect(textBuffer, signature.rules);
+        }
+      }
+
+      if (buffer.textRecoded !== undefined)
+        delete buffer.textRecoded;
+
       if (detection) {
         result = DetectFileType._getRuleDetection({}, signature, detection);
         return false;
@@ -137,14 +153,14 @@ class DetectFileType {
   }
 
   /** @private */
-  static _detect(buffer, rules, type, searchData) {
+  static _detect(buffer, rules, type, searchData, tryTextBuffer) {
     if (!type) {
       type = 'and';
     }
 
     let detectedRule = true;
-
-    rules.every((rule) => {
+    
+    const ruleEvaluator = (rule) => {
 
       let result = true;
 
@@ -189,9 +205,23 @@ class DetectFileType {
 
       if (rule.type === 'or') {
         result = this._detect(buffer, rule.rules, 'or', searchData);
+
+        if (!result && rule.recode_text === true) {
+          let textBuffer = this._getTextBuffer(buffer);
+          if (textBuffer !== null) {
+            result = this._detect(textBuffer, rule.rules, 'or', searchData);
+          }
+        }
       }
       else if (rule.type === 'and') {
         result = this._detect(buffer, rule.rules, 'and', searchData);
+
+        if (!result && rule.recode_text === true) {
+          let textBuffer = this._getTextBuffer(buffer);
+          if (textBuffer !== null) {
+            result = this._detect(textBuffer, rule.rules, 'and', searchData);
+          }
+        }
       }
       else if (rule.type === 'default') {
         result = rule;
@@ -241,7 +271,9 @@ class DetectFileType {
 
       detectedRule = this._getRuleDetection(detectedRule, result);
       return this._isReturnFalse(detectedRule, type);
-    });
+    };
+
+    rules.every(ruleEvaluator);
 
     return detectedRule;
   }
@@ -397,6 +429,25 @@ class DetectFileType {
     return v;
   }
 
+  static _getTextBuffer(buffer) {
+    if (buffer.textRecoded === undefined) {
+      let textBuffer = null;
+
+      try {
+        let detected = Jschardet.detect(buffer);
+        if (detected) {
+          textBuffer = Buffer.from(Iconv.decode(buffer, detected.encoding, iconvOptions));
+          if (buffer.equals(textBuffer))
+            textBuffer = null;
+        }
+      } catch (ignored) {
+      }
+
+      buffer.textRecoded = textBuffer;
+    }
+    
+    return buffer.textRecoded;
+  }
 }
 
 /** @type {typeof DetectFileType} */

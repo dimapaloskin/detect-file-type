@@ -40,5 +40,9 @@
     "chai": "^4.2.0",
     "is-html": "^1.0.0",
     "mocha": "^6.0.2"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.5.1",
+    "jschardet": "^2.1.1"
   }
 }
