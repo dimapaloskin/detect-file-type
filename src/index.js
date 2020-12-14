@@ -26,9 +26,9 @@ let validatedSignaturesCache = false;
 class DetectFileType {
 
   /**
-   * @param {string} filePath 
-   * @param {number=} bufferLength 
-   * @param {function(Error=,FileTypeResult)} callback 
+   * @param {string} filePath
+   * @param {number=} bufferLength
+   * @param {function(Error=,FileTypeResult)} callback
    */
   static fromFile(filePath, bufferLength, callback) {
 
@@ -58,9 +58,9 @@ class DetectFileType {
   }
 
   /**
-   * @param {number} fd 
-   * @param {number=} bufferLength 
-   * @param {function(Error=,FileTypeResult)} callback 
+   * @param {number} fd
+   * @param {number=} bufferLength
+   * @param {function(Error=,FileTypeResult)} callback
    */
   static fromFd(fd, bufferLength, callback) {
 
@@ -74,7 +74,7 @@ class DetectFileType {
       bufferSize = DEFAULT_BUFFER_SIZE;
     }
 
-    const buffer = new Buffer(bufferSize);
+    const buffer = new Buffer.alloc(bufferSize);
 
     fs.read(fd, buffer, 0, bufferSize, 0, (err, data) => {
 
@@ -89,8 +89,8 @@ class DetectFileType {
   }
 
   /**
-   * @param {Buffer} buffer 
-   * @param {function(Error=,FileTypeResult)} callback 
+   * @param {Buffer} buffer
+   * @param {function(Error=,FileTypeResult)} callback
    */
   static fromBuffer(buffer, callback) {
 
@@ -159,7 +159,7 @@ class DetectFileType {
     }
 
     let detectedRule = true;
-    
+
     const ruleEvaluator = (rule) => {
 
       let result = true;
@@ -411,10 +411,10 @@ class DetectFileType {
   /** @private */
   static _getRuleDetection() {
     let v = false;
-  
+
     for (let i = 0, len = arguments.length; i < len; i++) {
       let detection = arguments[i];
-  
+
       if (typeof detection === 'boolean') {
           v = detection ? v || detection : false;
       }
@@ -425,7 +425,7 @@ class DetectFileType {
         if ('iana' in detection) v.iana = detection.iana;
       }
     }
-  
+
     return v;
   }
 
@@ -445,7 +445,7 @@ class DetectFileType {
 
       buffer.textRecoded = textBuffer;
     }
-    
+
     return buffer.textRecoded;
   }
 }
