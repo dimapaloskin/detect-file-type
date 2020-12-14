@@ -74,7 +74,7 @@ class DetectFileType {
       bufferSize = DEFAULT_BUFFER_SIZE;
     }
 
-    const buffer = new Buffer(bufferSize);
+    const buffer = new Buffer.alloc(bufferSize);
 
     fs.read(fd, buffer, 0, bufferSize, 0, (err, data) => {
 
